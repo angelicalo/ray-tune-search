@@ -19,6 +19,14 @@ initial_params = [
     }
 ]
 
+dl28_config = {
+    "data_fullpath": "/home/darlinne.soto/new_framework/data/",
+    "dataset_locations_fullpath": "/home/darlinne.soto/new_framework/ray-tune-search/basic/dataset_locations.yaml"
+}
+dl4_config = {
+    "data_fullpath": "/home/msc2021-fra/ra264955/new_framework/data/",
+    "dataset_locations_fullpath": "/home/msc2021-fra/ra264955/new_framework/ray-tune-search/basic/dataset_locations.yaml"
+}
 
 
 def main():
@@ -29,8 +37,8 @@ def main():
         f"umap_hyperparameters_on_{dataset}_starting_with_{start_dim}",
         max_concurrent=5,
         random_state=42,
-        data_fullpath='/home/darlinne.soto/new_framework/data',
-        dataset_locations_fullpath='/home/darlinne.soto/new_framework/ray-tune-search/basic/dataset_locations.yaml'
+        data_fullpath=dl28_config["data_fullpath"],
+        dataset_locations_fullpath=dl28_config["dataset_locations_fullpath"]
     )
 
 if __name__=="__main__":
