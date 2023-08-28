@@ -1,9 +1,8 @@
 # Python imports
-from dataclasses import asdict
 from typing import Any, Dict, List
 
 # Third-party imports
-from config import *
+from basic.config import *
 
 # Filter warnings from UMAP
 import warnings

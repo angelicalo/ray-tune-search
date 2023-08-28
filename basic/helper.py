@@ -1,10 +1,9 @@
 import numpy as np
 import random
 import torch
-import os
 import yaml
 from pathlib import Path
-from config import *
+from basic.config import *
 
 
 def set_random_state(random_state):

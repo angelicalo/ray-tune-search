@@ -1,11 +1,9 @@
 # Python imports
-from dataclasses import asdict
-from pathlib import Path
 from typing import Any, Dict, List
 import pickle
 
 # Third-party imports
-from config import *
+from basic.config import *
 
 # Filter warnings from UMAP
 import warnings
