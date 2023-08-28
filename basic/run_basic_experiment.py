@@ -1,18 +1,10 @@
 # Python imports
-import argparse
-import logging
-import sys
 import time
 from dataclasses import asdict
-from pathlib import Path
 from typing import Any, Dict, List
-import pickle
 
-# Third-party imports
-import yaml
-from config import ExecutionConfig
-from config import *
-from dacite import from_dict
+# from config import ExecutionConfig
+from basic.config import *
 
 # Filter warnings from UMAP
 import warnings
@@ -22,13 +14,13 @@ warnings.filterwarnings("ignore", message=".*The 'nopython' keyword.*")
 from librep.config.type_definitions import PathLike
 from librep.metrics.report import ClassificationReport
 from librep.utils.workflow import MultiRunWorkflow, SimpleTrainEvalWorkflow
-from utils import catchtime, load_yaml, get_sys_info
+from basic.utils import catchtime, load_yaml, get_sys_info
 
 # Local imports
-from load_datasets import load_datasets
-from do_transform import do_transform
-from do_reduce import do_reduce
-from do_scaling import do_scaling
+from basic.load_datasets import load_datasets
+from basic.do_transform import do_transform
+from basic.do_reduce import do_reduce
+from basic.do_scaling import do_scaling
 
 
 # Function that runs the experiment
