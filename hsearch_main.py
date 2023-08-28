@@ -7,10 +7,7 @@ search_space = {
     "umap_ncomp": tune.randint(2, 360),
     "umap_spread": tune.randint(1, 30),
     "umap_mdist": tune.uniform(0.0, 0.99),
-    "umap_neigh": tune.randint(2, 201),
-    "random_state": 42,
-    "dataset": dataset,
-    "save_folder": 'results/files'
+    "umap_neigh": tune.randint(2, 201)
 }
 
 initial_params = [
@@ -22,4 +19,4 @@ initial_params = [
     }
 ]
 
-hyperparameters_search(search_space, initial_params, dataset, f"umap_hyperparameters_on_{dataset}_start{start_dim}", max_concurrent=5, random_state=42)
+hyperparameters_search(search_space, initial_params, dataset, f"umap_hyperparameters_on_{dataset}_starting_with_{start_dim}", max_concurrent=5, random_state=42)

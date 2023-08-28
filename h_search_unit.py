@@ -7,9 +7,9 @@ import yaml
 sys.path.append(str(Path(__file__).resolve().parent.parent))
 
 # Third-party imports
-from config import *
-from run_basic_experiment import run_basic_experiment
-from helper import umap_simple_experiment, process_result, get_dataset_locations, set_random_state
+from basic.config import *
+from basic.run_basic_experiment import run_basic_experiment
+from basic.helper import umap_simple_experiment, process_result, get_dataset_locations, set_random_state
 
 
 def h_search_unit(config, random_state, dataset, data_fullpath, dataset_locations_fullpath, save_folder=None):
