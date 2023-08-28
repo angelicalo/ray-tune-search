@@ -15,7 +15,6 @@ from librep.datasets.multimodal import (
     WindowedTransform,
 )
 
-
 # Non-parametric transform
 def do_transform(
     datasets: List[MultiModalDataset],

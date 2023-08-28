@@ -5,17 +5,13 @@ import pickle
 # Third-party imports
 from basic.config import *
 
-# Filter warnings from UMAP
-import warnings
-warnings.filterwarnings("ignore", message=".*The 'nopython' keyword.*")
-
 # Librep imports
 from librep.datasets.multimodal import (
     MultiModalDataset,
     TransformMultiModalDataset,
     WindowedTransform,
 )
-from utils import multimodal_multi_merge
+from basic.utils import multimodal_multi_merge
 
 # Parametric transform
 def do_reduce(
