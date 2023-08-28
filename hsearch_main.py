@@ -19,4 +19,19 @@ initial_params = [
     }
 ]
 
-hyperparameters_search(search_space, initial_params, dataset, f"umap_hyperparameters_on_{dataset}_starting_with_{start_dim}", max_concurrent=5, random_state=42)
+
+
+def main():
+    hyperparameters_search(
+        search_space,
+        initial_params,
+        dataset,
+        f"umap_hyperparameters_on_{dataset}_starting_with_{start_dim}",
+        max_concurrent=5,
+        random_state=42,
+        data_fullpath='/home/darlinne.soto/new_framework/data',
+        dataset_locations_fullpath='/home/darlinne.soto/new_framework/ray-tune-search/basic/dataset_locations.yaml'
+    )
+
+if __name__=="__main__":
+    main()
