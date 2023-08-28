@@ -1,5 +1,6 @@
 from hyperparameters_search import hyperparameters_search
 from ray import tune
+import argparse
 
 dataset = 'kuhar.standartized_balanced'
 start_dim = 200
@@ -29,17 +30,31 @@ dl4_config = {
 }
 
 
-def main():
+def main(args):
     hyperparameters_search(
         search_space,
         initial_params,
         dataset,
         f"umap_hyperparameters_on_{dataset}_starting_with_{start_dim}",
-        max_concurrent=5,
+        max_concurrent=args.max_concurrent,
         random_state=42,
         data_fullpath=dl28_config["data_fullpath"],
         dataset_locations_fullpath=dl28_config["dataset_locations_fullpath"]
     )
 
 if __name__=="__main__":
-    main()
+    parser = argparse.ArgumentParser(
+        prog="Execute experiments in datasets",
+        description="Runs experiments in a dataset with a set of configurations",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
+    parser.add_argument(
+        "--max_concurrent",
+        default=5,
+        help="Max number of concurrent executions",
+        type=int,
+        required=False,
+    )
+
+    args = parser.parse_args()
+    main(args=args)
