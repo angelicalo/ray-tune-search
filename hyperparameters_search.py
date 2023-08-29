@@ -25,7 +25,7 @@ def my_objective_function(config, random_state, dataset, save_folder, dataset_lo
 
 # TO MODIFY: EXECUTE HYPERPARAMETERS SEARCH
 def hyperparameters_search(search_space, initial_params, dataset, experiment_name, max_concurrent=5, random_state=42, dataset_locations=None):
-    save_folder = os.path.abspath(f'{experiment_name}/results/files')
+    save_folder = os.path.abspath(f'{experiment_name}/files')
     print(f"Saving results to {save_folder}...")
     os.makedirs(save_folder, exist_ok=True)
     print("TUNE_ORIG_WORKING_DIR:", os.environ.get("TUNE_ORIG_WORKING_DIR"))
@@ -33,10 +33,10 @@ def hyperparameters_search(search_space, initial_params, dataset, experiment_nam
     print("TUNE_RESULT_DIR:", os.environ.get("TUNE_RESULT_DIR"))
 
     # Set default values
-    if data_fullpath is None:
-        data_fullpath = "/home/msc2021-fra/ra264955/new_framework/data/"
-    if dataset_locations_fullpath is None:
-        dataset_locations_fullpath = "/home/msc2021-fra/ra264955/new_framework/ray-tune-search/basic/dataset_locations.yaml"
+    # if data_fullpath is None:
+    #     data_fullpath = "/home/msc2021-fra/ra264955/new_framework/data/"
+    # if dataset_locations_fullpath is None:
+    #     dataset_locations_fullpath = "/home/msc2021-fra/ra264955/new_framework/ray-tune-search/basic/dataset_locations.yaml"
     
     # dataset_locations = get_dataset_locations(data_fullpath=data_fullpath, dataset_locations_fullpath=dataset_locations_fullpath)
 
@@ -67,11 +67,11 @@ def hyperparameters_search(search_space, initial_params, dataset, experiment_nam
 
     results = tuner.fit()
     # Save results in a csv file
-    results.get_dataframe().to_csv(f"{experiment_name}/results/data.csv")
+    results.get_dataframe().to_csv(f"{experiment_name}/data.csv")
     # Report the best result
     best_result = results.get_best_result(metric="score", mode="max")
     to_save = {'config': best_result.config, 'score': float(best_result.metrics['score'])}
 
     # Save the best result
-    with open(f"{experiment_name}/results/best.yaml", "w") as f:
+    with open(f"{experiment_name}/best.yaml", "w") as f:
         yaml.dump(to_save, f)

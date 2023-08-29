@@ -20,7 +20,7 @@ def set_random_state(random_state):
     # torch.backends.cudnn.benchmark = False
 
 
-def get_dataset_locations(data_fullpath, dataset_locations_fullpath):
+def get_dataset_locations(data_fullpath: Path, dataset_locations_fullpath: Path):
     # print("TUNE_ORIG_WORKING_DIR:", os.environ.get("TUNE_ORIG_WORKING_DIR"))
     # base_dir = "/home/msc2021-fra/ra264955/new_framework/data/"
     # path = Path("/home/msc2021-fra/ra264955/new_framework/hyperparameters_search/dataset_locations.yaml")
@@ -28,7 +28,9 @@ def get_dataset_locations(data_fullpath, dataset_locations_fullpath):
         base_locations = yaml.load(f, Loader=yaml.CLoader)
     # results = load_yaml("~/new_framework/hyperparameters_search/dataset_locations.yaml")
     for item in base_locations:
-        base_locations[item] = Path(data_fullpath + base_locations[item])
+        # base_locations[item] =  Path(data_fullpath + base_locations[item])
+        # base_locations[item] =  Path(data_fullpath) / base_locations[item]
+        base_locations[item] =  Path(data_fullpath) / Path(base_locations[item])
     return base_locations
 
 

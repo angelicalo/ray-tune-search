@@ -36,31 +36,32 @@ import yaml
 
 
 def main(args):
-    data_fullpath = Path.absolute(args.data_fullpath)
-    dataset_locations_fullpath = Path.absolute(args.dataset_locations_fullpath)
+    data_fullpath = Path.absolute(Path(args.data))
+    dataset_locations_fullpath = Path.absolute(Path(args.dataset_locations_fullpath))
     dataset_locations = get_dataset_locations(
         data_fullpath=data_fullpath,
         dataset_locations_fullpath=dataset_locations_fullpath
     )
-    print(dataset_locations)
+    # print(dataset_locations)
 
     with open("config_to_evaluate.yaml", "r") as f:
         input_file = yaml.load(f, Loader=yaml.FullLoader)
-        print(input_file)
+        # print(input_file)
     
     search_space = {
         key: getattr(tune, value['tune_function'])(*value['tune_parameters'])
         for key, value in input_file["search_space"].items()
     }
     initial_params = input_file["initial_params"]
+    experiment_name = input_file["experiment_name"]
     # for key, value in input_file["search_space"].items():
     #     search_space[key] = getattr(tune, value['tune_function'])(*value['tune_parameters'])
-    assert 1==0
+    # assert 1==0
     hyperparameters_search(
         search_space=search_space,
         initial_params=initial_params,
         dataset=args.dataset,
-        experiment_name=args.experiment_name,
+        experiment_name=experiment_name,
         max_concurrent=args.max_concurrent,
         random_state=args.random_state,
         dataset_locations=dataset_locations
@@ -95,7 +96,7 @@ if __name__=="__main__":
     )
     parser.add_argument(
         "--dataset_locations_fullpath",
-        default="../basic/dataset_locations.yaml",
+        default="basic/dataset_locations.yaml",
         help="Dataset locations full path",
         type=str,
         required=False,
@@ -107,13 +108,13 @@ if __name__=="__main__":
         type=str,
         required=False,
     )
-    parser.add_argument(
-        "--experiment_name",
-        default="Test_experiment",
-        help="Experiment name",
-        type=str,
-        required=False,
-    )
+    # parser.add_argument(
+    #     "--experiment_name",
+    #     default="Test_experiment",
+    #     help="Experiment name",
+    #     type=str,
+    #     required=False,
+    # )
 
     args = parser.parse_args()
     print(args)
