@@ -7,17 +7,16 @@ import yaml
 import os
 from h_search_unit import h_search_unit
 from ray.air import session
+from basic.helper import set_random_state, get_dataset_locations
 
-
-def my_objective_function(config, random_state, dataset, save_folder, data_fullpath, dataset_locations_fullpath):
+def my_objective_function(config, random_state, dataset, save_folder, dataset_locations):
     try:
         result = h_search_unit(
             config=config,
             random_state=random_state,
             dataset=dataset,
             save_folder=save_folder,
-            data_fullpath=data_fullpath,
-            dataset_locations_fullpath=dataset_locations_fullpath
+            dataset_locations=dataset_locations
         )
     except Exception as e:
         result = {'score': -1}
@@ -25,7 +24,7 @@ def my_objective_function(config, random_state, dataset, save_folder, data_fullp
 
 
 # TO MODIFY: EXECUTE HYPERPARAMETERS SEARCH
-def hyperparameters_search(search_space, initial_params, dataset, experiment_name, max_concurrent=5, random_state=42, data_fullpath=None, dataset_locations_fullpath=None):
+def hyperparameters_search(search_space, initial_params, dataset, experiment_name, max_concurrent=5, random_state=42, dataset_locations=None):
     save_folder = os.path.abspath(f'{experiment_name}/results/files')
     print(f"Saving results to {save_folder}...")
     os.makedirs(save_folder, exist_ok=True)
@@ -39,6 +38,8 @@ def hyperparameters_search(search_space, initial_params, dataset, experiment_nam
     if dataset_locations_fullpath is None:
         dataset_locations_fullpath = "/home/msc2021-fra/ra264955/new_framework/ray-tune-search/basic/dataset_locations.yaml"
     
+    # dataset_locations = get_dataset_locations(data_fullpath=data_fullpath, dataset_locations_fullpath=dataset_locations_fullpath)
+
     hyperopt = HyperOptSearch(points_to_evaluate=initial_params)
     hyperopt = ConcurrencyLimiter(hyperopt, max_concurrent=max_concurrent)
 
@@ -48,8 +49,7 @@ def hyperparameters_search(search_space, initial_params, dataset, experiment_nam
             random_state=random_state,
             dataset=dataset,
             save_folder=save_folder,
-            data_fullpath=data_fullpath,
-            dataset_locations_fullpath=dataset_locations_fullpath
+            dataset_locations=dataset_locations
         ),
         tune_config=tune.TuneConfig(
             metric="score",
