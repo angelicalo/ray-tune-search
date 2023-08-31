@@ -24,7 +24,7 @@ def my_objective_function(config, random_state, dataset, save_folder, dataset_lo
 
 
 # TO MODIFY: EXECUTE HYPERPARAMETERS SEARCH
-def hyperparameters_search(search_space, initial_params, dataset, experiment_name, max_concurrent=5, random_state=42, dataset_locations=None):
+def hyperparameters_search(search_space, initial_params, dataset, experiment_name, max_concurrent=5, random_state=42, dataset_locations=None, resources={"cpu": 1, "gpu": 0}):
     save_folder = os.path.abspath(f'{experiment_name}/files')
     print(f"Saving results to {save_folder}...")
     os.makedirs(save_folder, exist_ok=True)
@@ -43,14 +43,28 @@ def hyperparameters_search(search_space, initial_params, dataset, experiment_nam
     hyperopt = HyperOptSearch(points_to_evaluate=initial_params)
     hyperopt = ConcurrencyLimiter(hyperopt, max_concurrent=max_concurrent)
 
+    # Initializing the trainable
+    trainable = my_objective_function
+    # Setting the parameters for the function
+    trainable = tune.with_parameters(
+        trainable,
+        random_state=random_state,
+        dataset=dataset,
+        save_folder=save_folder,
+        dataset_locations=dataset_locations
+    )
+    # Allocating the resources needed
+    trainable = tune.with_resources(trainable=trainable, resources=resources)
+
     tuner = tune.Tuner(
-        tune.with_parameters(
-            my_objective_function,
-            random_state=random_state,
-            dataset=dataset,
-            save_folder=save_folder,
-            dataset_locations=dataset_locations
-        ),
+        # tune.with_parameters(
+        #     my_objective_function,
+        #     random_state=random_state,
+        #     dataset=dataset,
+        #     save_folder=save_folder,
+        #     dataset_locations=dataset_locations
+        # ),
+        trainable=trainable,
         tune_config=tune.TuneConfig(
             metric="score",
             mode="max",
