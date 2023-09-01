@@ -24,7 +24,7 @@ def my_objective_function(
         route = search_space[key]['route'].split('/')
         property_to_modify = basic_experiment_configuration
         for item in route:
-            property_to_modify = getattr(property_to_modify, item)
+            property_to_modify = property_to_modify[item]
         property_to_modify = value
     print('EXPERIMENT'*10, basic_experiment_configuration)
     experiment_configuration = from_dict(data_class=ExecutionConfig, data=basic_experiment_configuration)
