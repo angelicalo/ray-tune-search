@@ -27,7 +27,7 @@ def my_objective_function(
             property_to_modify = property_to_modify[item]
         property_to_modify[route[-1]] = value
     print('EXPERIMENT'*10, basic_experiment_configuration)
-    experiment_configuration = from_dict(data_class=ExecutionConfig, data=basic_experiment_configuration)
+    config_to_execute = from_dict(data_class=ExecutionConfig, data=basic_experiment_configuration)
 
     try:
         result = h_search_unit(
@@ -36,7 +36,7 @@ def my_objective_function(
             # dataset=dataset,
             save_folder=save_folder,
             dataset_locations=dataset_locations,
-            experiment_configuration=experiment_configuration
+            config_to_execute=config_to_execute
         )
     except Exception as e:
         print(e)
