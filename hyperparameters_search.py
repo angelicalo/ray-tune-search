@@ -29,8 +29,6 @@ def my_objective_function(
     print('EXPERIMENT'*10, basic_experiment_configuration)
     experiment_configuration = from_dict(data_class=ExecutionConfig, data=basic_experiment_configuration)
 
-
-
     try:
         result = h_search_unit(
             # config=config,
@@ -52,9 +50,7 @@ def hyperparameters_search(
         # resources={"cpu": 1, "gpu": 0},
         base_config=None,
         exploration_config=None):
-    save_folder = os.path.abspath(f'{experiment_name}/files')
-    print(f"Saving results to {save_folder}...")
-    os.makedirs(save_folder, exist_ok=True)
+    
 
 
     # Set the random state
@@ -72,6 +68,10 @@ def hyperparameters_search(
     initial_params = exploration_config["initial_params"]
     experiment_name = exploration_config["experiment_name"]
     resources = exploration_config["resources"]
+
+    save_folder = os.path.abspath(f'{experiment_name}/files')
+    print(f"Saving results to {save_folder}...")
+    os.makedirs(save_folder, exist_ok=True)
 
     hyperopt = HyperOptSearch(points_to_evaluate=initial_params)
     hyperopt = ConcurrencyLimiter(hyperopt, max_concurrent=max_concurrent)
