@@ -23,9 +23,9 @@ def my_objective_function(
     for key, value in config.items():
         route = search_space[key]['route'].split('/')
         property_to_modify = basic_experiment_configuration
-        for item in route:
+        for key, item in enumerate(route[:-1]):
             property_to_modify = property_to_modify[item]
-        property_to_modify = value
+        property_to_modify[route[-1]] = value
     print('EXPERIMENT'*10, basic_experiment_configuration)
     experiment_configuration = from_dict(data_class=ExecutionConfig, data=basic_experiment_configuration)
 
@@ -39,6 +39,7 @@ def my_objective_function(
             experiment_configuration=experiment_configuration
         )
     except Exception as e:
+        print(e)
         result = {'score': -1}
     session.report(result)
 
