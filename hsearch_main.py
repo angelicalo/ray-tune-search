@@ -61,13 +61,13 @@ if __name__=="__main__":
         type=int,
         required=False,
     )
-    parser.add_argument(
-        "--dataset",
-        default=None,
-        help="Dataset name",
-        type=str,
-        required=True,
-    )
+    # parser.add_argument(
+    #     "--dataset",
+    #     default=None,
+    #     help="Dataset name",
+    #     type=str,
+    #     required=True,
+    # )
     parser.add_argument(
         "--dataset_locations_fullpath",
         default="basic/dataset_locations.yaml",
