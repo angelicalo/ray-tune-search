@@ -12,15 +12,17 @@ from basic.run_basic_experiment import run_basic_experiment
 from basic.helper import umap_simple_experiment, process_result, set_random_state
 
 
-def h_search_unit(config, random_state, dataset, dataset_locations, save_folder=None):
+def h_search_unit(
+        # config, random_state, dataset,
+        dataset_locations, save_folder=None, config_to_execute:ExecutionConfig=None):
     # Set the random state
-    set_random_state(random_state)
+    # set_random_state(random_state)
     # Create the experiment config
-    experiment_config = umap_simple_experiment(config, dataset, random_state)
+    # experiment_config = umap_simple_experiment(config, dataset, random_state)
     # Run the experiment
     experiment_result = run_basic_experiment(
         dataset_locations=dataset_locations,
-        config_to_execute=experiment_config
+        config_to_execute=config_to_execute
     )
     # Save the results
     if save_folder:

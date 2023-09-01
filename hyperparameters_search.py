@@ -8,15 +8,37 @@ import os
 from h_search_unit import h_search_unit
 from ray.air import session
 from basic.helper import set_random_state, get_dataset_locations
+from basic.config import ExecutionConfig
+from copy import deepcopy
+from dacite import from_dict
 
-def my_objective_function(config, random_state, dataset, save_folder, dataset_locations):
+
+def my_objective_function(
+        config,
+        # random_state, dataset,
+        save_folder, dataset_locations,
+        basic_experiment_configuration=None, search_space=None):
+    basic_experiment_configuration = deepcopy(basic_experiment_configuration)
+    # Update the values for the current experiment
+    for key, value in config.items():
+        route = search_space[key]['route'].split('/')
+        property_to_modify = basic_experiment_configuration
+        for item in route:
+            property_to_modify = getattr(property_to_modify, item)
+        property_to_modify = value
+    print('EXPERIMENT'*10, basic_experiment_configuration)
+    experiment_configuration = from_dict(data_class=ExecutionConfig, data=basic_experiment_configuration)
+
+
+
     try:
         result = h_search_unit(
-            config=config,
-            random_state=random_state,
-            dataset=dataset,
+            # config=config,
+            # random_state=random_state,
+            # dataset=dataset,
             save_folder=save_folder,
-            dataset_locations=dataset_locations
+            dataset_locations=dataset_locations,
+            experiment_configuration=experiment_configuration
         )
     except Exception as e:
         result = {'score': -1}
@@ -24,21 +46,32 @@ def my_objective_function(config, random_state, dataset, save_folder, dataset_lo
 
 
 # TO MODIFY: EXECUTE HYPERPARAMETERS SEARCH
-def hyperparameters_search(search_space, initial_params, dataset, experiment_name, max_concurrent=5, random_state=42, dataset_locations=None, resources={"cpu": 1, "gpu": 0}):
+def hyperparameters_search(
+        # search_space, initial_params, dataset, experiment_name,
+        max_concurrent=5, random_state=42, dataset_locations=None,
+        # resources={"cpu": 1, "gpu": 0},
+        base_config=None,
+        exploration_config=None):
     save_folder = os.path.abspath(f'{experiment_name}/files')
     print(f"Saving results to {save_folder}...")
     os.makedirs(save_folder, exist_ok=True)
+
+
+    # Set the random state
+    set_random_state(random_state)
+
     print("TUNE_ORIG_WORKING_DIR:", os.environ.get("TUNE_ORIG_WORKING_DIR"))
     print("TUNE_WORKING_DIR:", os.environ.get("TUNE_WORKING_DIR"))
     print("TUNE_RESULT_DIR:", os.environ.get("TUNE_RESULT_DIR"))
 
-    # Set default values
-    # if data_fullpath is None:
-    #     data_fullpath = "/home/msc2021-fra/ra264955/new_framework/data/"
-    # if dataset_locations_fullpath is None:
-    #     dataset_locations_fullpath = "/home/msc2021-fra/ra264955/new_framework/ray-tune-search/basic/dataset_locations.yaml"
-    
-    # dataset_locations = get_dataset_locations(data_fullpath=data_fullpath, dataset_locations_fullpath=dataset_locations_fullpath)
+    # Get the search space, initial params and experiment name from the config file
+    search_space = {
+        key: getattr(tune, value['tune_function'])(*value['tune_parameters'])
+        for key, value in exploration_config["search_space"].items()
+    }
+    initial_params = exploration_config["initial_params"]
+    experiment_name = exploration_config["experiment_name"]
+    resources = exploration_config["resources"]
 
     hyperopt = HyperOptSearch(points_to_evaluate=initial_params)
     hyperopt = ConcurrencyLimiter(hyperopt, max_concurrent=max_concurrent)
@@ -48,10 +81,12 @@ def hyperparameters_search(search_space, initial_params, dataset, experiment_nam
     # Setting the parameters for the function
     trainable = tune.with_parameters(
         trainable,
-        random_state=random_state,
-        dataset=dataset,
+        # random_state=random_state,
+        # dataset=dataset,
         save_folder=save_folder,
-        dataset_locations=dataset_locations
+        dataset_locations=dataset_locations,
+        basic_experiment_configuration=base_config,
+        search_space=exploration_config['search_space']
     )
     # Allocating the resources needed
     trainable = tune.with_resources(trainable=trainable, resources=resources)
@@ -70,7 +105,8 @@ def hyperparameters_search(search_space, initial_params, dataset, experiment_nam
             mode="max",
             num_samples=-1,
             scheduler=ASHAScheduler(),
-            search_alg=hyperopt
+            search_alg=hyperopt,
+            time_budget_s=3600*12,
         ),
         run_config=air.RunConfig(
             name=experiment_name,

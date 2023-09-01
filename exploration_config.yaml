@@ -1,4 +1,4 @@
-experiment_name: umap_hyperparameters_on_kuhar.standartized_balanced_starting_with_30.60.90...300
+experiment_name: test30...300
 resources:
   gpu_usage: 0.0
   cpu_usage: 1.0
@@ -6,15 +6,19 @@ search_space:
   umap_ncomp:
     tune_function: randint
     tune_parameters: [2, 360]
+    route: reducer/kwargs/n_components
   umap_spread:
     tune_function: randint
     tune_parameters: [1, 10]
+    route: reducer/kwargs/spread
   umap_mdist:
     tune_function: uniform
-    tune_parameters: [0.0, 0.99]
+    tune_parameters: [0.0, 2]
+    route: reducer/kwargs/min_dist
   umap_neigh:
     tune_function: randint
     tune_parameters: [2, 201]
+    route: reducer/kwargs/n_neighbors
 initial_params:
   - umap_ncomp: 30
     umap_spread: 1

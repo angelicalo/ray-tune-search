@@ -4,6 +4,9 @@ import argparse
 from basic.helper import get_dataset_locations
 from pathlib import Path
 import yaml
+from dacite import from_dict
+from basic.config import ExecutionConfig
+
 
 
 # Main function
@@ -17,28 +20,24 @@ def main(args):
     )
 
     # Read the hyperparameters search config file
-    with open("config_to_evaluate.yaml", "r") as f:
-        input_file = yaml.load(f, Loader=yaml.FullLoader)
-
-    # Get the search space, initial params and experiment name from the config file
-    search_space = {
-        key: getattr(tune, value['tune_function'])(*value['tune_parameters'])
-        for key, value in input_file["search_space"].items()
-    }
-    initial_params = input_file["initial_params"]
-    experiment_name = input_file["experiment_name"]
-    resources = input_file["resources"]
-
+    with open("exploration_config.yaml", "r") as f:
+        exploration_config = yaml.load(f, Loader=yaml.FullLoader)
+    
+    with open("base_config.yaml", "r") as f:
+        base_config = yaml.load(f, Loader=yaml.FullLoader)
+    
     # Execute the hyperparameters search
     hyperparameters_search(
-        search_space=search_space,
-        initial_params=initial_params,
-        dataset=args.dataset,
-        experiment_name=experiment_name,
+        # search_space=search_space,
+        # initial_params=initial_params,
+        # dataset=args.dataset,
+        # experiment_name=experiment_name,
         max_concurrent=args.max_concurrent,
         random_state=args.random_state,
         dataset_locations=dataset_locations,
-        resources=resources
+        # resources=resources,
+        base_config=base_config,
+        exploration_config=exploration_config
     )
 
 # Execute main function
