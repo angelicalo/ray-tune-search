@@ -20,11 +20,13 @@ def main(args):
     )
 
     # Read the hyperparameters search config file
-    with open("exploration_config.yaml", "r") as f:
+    with open(f"experiments/{args.experiment}/exploration_config.yaml", "r") as f:
         exploration_config = yaml.load(f, Loader=yaml.FullLoader)
     
-    with open("base_config.yaml", "r") as f:
+    with open(f"experiments/{args.experiment}/base_config.yaml", "r") as f:
         base_config = yaml.load(f, Loader=yaml.FullLoader)
+    
+    experiment_full_path = Path.absolute(Path(f"experiments/{args.experiment}"))
     
     # Execute the hyperparameters search
     hyperparameters_search(
@@ -37,7 +39,8 @@ def main(args):
         dataset_locations=dataset_locations,
         # resources=resources,
         base_config=base_config,
-        exploration_config=exploration_config
+        exploration_config=exploration_config,
+        experiment_full_path=experiment_full_path
     )
 
 # Execute main function
@@ -81,6 +84,12 @@ if __name__=="__main__":
         help="Dataset locations full path",
         type=str,
         required=False,
+    )
+    parser.add_argument(
+        "--experiment",
+        help="Experiment folder",
+        type=str,
+        required=True,
     )
     # parser.add_argument(
     #     "--experiment_name",

@@ -1,0 +1,72 @@
+resources:
+  gpu: 0.2
+  cpu: 1.0
+  # extra_properties:
+  #           num_CL: 2
+  #           num_HL: 2
+  #           size_CL: 32
+  #           size_HL: 150
+  #       latent_dim: 10
+  #       model_lambda: 0
+search_space:
+  num_CL:
+    tune_function: randint
+    tune_parameters: [2, 9]
+    route: reducer/kwargs/extra_properties/num_CL
+  num_HL:
+    tune_function: randint
+    tune_parameters: [2, 9]
+    route: reducer/kwargs/extra_properties/num_HL
+  size_CL:
+    tune_function: randint
+    tune_parameters: [2, 33]
+    route: reducer/kwargs/extra_properties/size_CL
+  size_HL:
+    tune_function: randint
+    tune_parameters: [20, 151]
+    route: reducer/kwargs/extra_properties/size_HL
+  latent_dim:
+    tune_function: randint
+    tune_parameters: [2, 361]
+    route: reducer/kwargs/latent_dim
+  model_lamda:
+    tune_function: loguniform
+    tune_parameters: [0.0, 10.0]
+    route: reducer/kwargs/model_lambda
+  # umap_mdist:
+  #   tune_function: uniform
+  #   tune_parameters: [0.0, 2]
+  #   route: reducer/kwargs/min_dist
+  # umap_neigh:
+  #   tune_function: randint
+  #   tune_parameters: [2, 201]
+  #   route: reducer/kwargs/n_neighbors
+initial_params:
+  # - umap_ncomp: 30
+  #   umap_spread: 1
+  #   umap_mdist: 0.1
+  #   umap_neigh: 15
+  # - umap_ncomp: 60
+  #   umap_spread: 1
+  #   umap_mdist: 0.1
+  #   umap_neigh: 15
+  # - umap_ncomp: 90
+  #   umap_spread: 1
+  #   umap_mdist: 0.1
+  #   umap_neigh: 15
+  # - umap_ncomp: 120
+  #   umap_spread: 1
+  #   umap_mdist: 0.1
+  #   umap_neigh: 15
+  # - umap_ncomp: 150
+  #   umap_spread: 1
+  #   umap_mdist: 0.1
+  #   umap_neigh: 15
+  # - umap_ncomp: 200
+  #   umap_spread: 1
+  #   umap_mdist: 0.1
+  #   umap_neigh: 15
+  # - umap_ncomp: 300
+  #   umap_spread: 1
+  #   umap_mdist: 0.1
+  #   umap_neigh: 15

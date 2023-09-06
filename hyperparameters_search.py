@@ -26,7 +26,7 @@ def my_objective_function(
         for key, item in enumerate(route[:-1]):
             property_to_modify = property_to_modify[item]
         property_to_modify[route[-1]] = value
-    print('EXPERIMENT'*10, basic_experiment_configuration)
+    # print('EXPERIMENT'*10, basic_experiment_configuration)
     config_to_execute = from_dict(data_class=ExecutionConfig, data=basic_experiment_configuration)
 
     try:
@@ -50,7 +50,7 @@ def hyperparameters_search(
         max_concurrent=5, random_state=42, dataset_locations=None,
         # resources={"cpu": 1, "gpu": 0},
         base_config=None,
-        exploration_config=None):
+        exploration_config=None, experiment_full_path=None):
     
 
 
@@ -67,10 +67,12 @@ def hyperparameters_search(
         for key, value in exploration_config["search_space"].items()
     }
     initial_params = exploration_config["initial_params"]
-    experiment_name = exploration_config["experiment_name"]
+    # experiment_name = exploration_config["experiment_name"]
     resources = exploration_config["resources"]
 
-    save_folder = os.path.abspath(f'{experiment_name}/files')
+
+    save_folder = os.path.abspath(f'{experiment_full_path}/files')
+    # save_folder = os.path.abspath(f'experiments/{experiment}/files')
     print(f"Saving results to {save_folder}...")
     os.makedirs(save_folder, exist_ok=True)
 
@@ -110,7 +112,7 @@ def hyperparameters_search(
             time_budget_s=3600*12,
         ),
         run_config=air.RunConfig(
-            name=experiment_name,
+            name=str(experiment_full_path).split('/')[-1],
             stop=ExperimentPlateauStopper(metric="score", std=0.001, top=10, mode="max", patience=0)
         ),
         param_space=search_space
@@ -118,11 +120,11 @@ def hyperparameters_search(
 
     results = tuner.fit()
     # Save results in a csv file
-    results.get_dataframe().to_csv(f"{experiment_name}/data.csv")
+    results.get_dataframe().to_csv(f"{experiment_full_path}/data.csv")
     # Report the best result
     best_result = results.get_best_result(metric="score", mode="max")
     to_save = {'config': best_result.config, 'score': float(best_result.metrics['score'])}
 
     # Save the best result
-    with open(f"{experiment_name}/best.yaml", "w") as f:
+    with open(f"{experiment_full_path}/best.yaml", "w") as f:
         yaml.dump(to_save, f)
