@@ -11,7 +11,11 @@ from basic.helper import set_random_state, get_dataset_locations
 from basic.config import ExecutionConfig
 from copy import deepcopy
 from dacite import from_dict
+from ray.tune import Callback
 
+class BestResultCallback(Callback):
+    def on_trial_result(self, iteration, trials, trial, result, **info):
+        print(f"Got result: {result['metric']}")
 
 def my_objective_function(
         config,
@@ -113,6 +117,7 @@ def hyperparameters_search(
         ),
         run_config=air.RunConfig(
             name=str(experiment_full_path).split('/')[-1],
+            callbacks=[BestResultCallback()],
             stop=ExperimentPlateauStopper(metric="score", std=0.001, top=10, mode="max", patience=0)
         ),
         param_space=search_space
