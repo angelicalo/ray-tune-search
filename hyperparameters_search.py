@@ -15,7 +15,7 @@ from ray.tune import Callback
 
 class BestResultCallback(Callback):
     def on_trial_result(self, iteration, trials, trial, result, **info):
-        print(f"Got result: {result['metric']}")
+        print(f"Got result: {result['score']}")
 
 def my_objective_function(
         config,
