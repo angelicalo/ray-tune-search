@@ -5,6 +5,7 @@ import yaml
 from basic.helper import get_dataset_locations
 from pathlib import Path
 import argparse
+import os
 
 
 def execute_once(dataset_locations, save_folder, experiment_configuration, specific_name=None):
@@ -24,6 +25,10 @@ def execute_once(dataset_locations, save_folder, experiment_configuration, speci
     return result
 
 def main(args):
+    # If folder does not exist, create it
+    os.makedirs(f"execute_once_experiments/scores", exist_ok=True)
+    os.makedirs(f"execute_once_experiments/results", exist_ok=True)
+    
     # Get the dataset locations
     data_fullpath = Path.absolute(Path(args.data))
     dataset_locations_fullpath = Path.absolute(Path(args.dataset_locations_fullpath))
