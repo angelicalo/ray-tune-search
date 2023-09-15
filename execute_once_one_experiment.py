@@ -40,15 +40,16 @@ def main(args):
     with open(f"execute_once_experiments/configs/{args.experiment}.yaml", "r") as f:
         experiment_config = yaml.load(f, Loader=yaml.FullLoader)
     # Execute the hyperparameters search
-    score = execute_once(
+    result = execute_once(
         dataset_locations=dataset_locations,
         save_folder=Path.absolute(Path(f"execute_once_experiments/results")),
         experiment_configuration=experiment_config,
         specific_name=args.experiment
     )
+    result['score'] = float(result['score'])
     # Save the score in a file
     with open(f"execute_once_experiments/scores/{args.experiment}.yaml", "w") as f:
-        yaml.dump(score, f)
+        yaml.dump(result, f)
 
 # Execute main function
 if __name__=="__main__":
