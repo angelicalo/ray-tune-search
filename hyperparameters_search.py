@@ -12,7 +12,7 @@ from basic.config import ExecutionConfig
 from copy import deepcopy
 from dacite import from_dict
 from ray.tune import Callback
-from random import randint
+import random
 
 
 class BestResultCallback(Callback):
@@ -46,7 +46,7 @@ def my_objective_function(
         )
     except Exception as e:
         print(e)
-        result = {'score': randint(-5, -20)}
+        result = {'score': random.uniform(-20, -10)}
     session.report(result)
 
 
