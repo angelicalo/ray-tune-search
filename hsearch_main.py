@@ -67,7 +67,7 @@ if __name__=="__main__":
     )
     parser.add_argument(
         "--time_budget",
-        default=3600*12,
+        default=3600*24,
         help="Time budget for the experiments",
         type=int,
         required=False,
