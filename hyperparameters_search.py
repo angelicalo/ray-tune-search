@@ -56,7 +56,7 @@ def hyperparameters_search(
         max_concurrent=5, random_state=42, dataset_locations=None,
         # resources={"cpu": 1, "gpu": 0},
         base_config=None,
-        exploration_config=None, experiment_full_path=None):
+        exploration_config=None, experiment_full_path=None, time_budget=3600*12):
     
 
 
@@ -115,7 +115,7 @@ def hyperparameters_search(
             num_samples=-1,
             scheduler=ASHAScheduler(),
             search_alg=hyperopt,
-            time_budget_s=3600*12,
+            time_budget_s=time_budget,
         ),
         run_config=air.RunConfig(
             name=str(experiment_full_path).split('/')[-1],

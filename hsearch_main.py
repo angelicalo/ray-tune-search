@@ -40,7 +40,8 @@ def main(args):
         # resources=resources,
         base_config=base_config,
         exploration_config=exploration_config,
-        experiment_full_path=experiment_full_path
+        experiment_full_path=experiment_full_path,
+        time_budget=args.time_budget
     )
 
 # Execute main function
@@ -61,6 +62,13 @@ if __name__=="__main__":
         "--random_state",
         default=42,
         help="Random state for the experiments",
+        type=int,
+        required=False,
+    )
+    parser.add_argument(
+        "--time_budget",
+        default=3600*12,
+        help="Time budget for the experiments",
         type=int,
         required=False,
     )
