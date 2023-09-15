@@ -14,7 +14,7 @@ from basic.helper import umap_simple_experiment, process_result, set_random_stat
 
 def h_search_unit(
         # config, random_state, dataset,
-        dataset_locations, save_folder=None, config_to_execute:ExecutionConfig=None):
+        dataset_locations, save_folder=None, config_to_execute:ExecutionConfig=None, specific_name=None):
     # Set the random state
     # set_random_state(random_state)
     # Create the experiment config
@@ -28,6 +28,8 @@ def h_search_unit(
     if save_folder:
         # Get the number of files in the folder
         item = len(os.listdir(save_folder))
+        if specific_name:
+            item = specific_name
         # Save the results
         with open(f"{save_folder}/{item}.yaml", "w") as f:
             yaml.dump(experiment_result, f)
