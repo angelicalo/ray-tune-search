@@ -44,19 +44,9 @@ reducer:
         model_name: ConvTAE_def
         num_epochs: 20000
         patience: 100
-        # save_dir: data/
         save_frequency: 20001
         save_tag: 0
     name: AE
-    # algorithm: umap
-    # kwargs:
-    #     n_components: 2
-    #     # n_epochs: 200
-    #     n_neighbors: 15
-    #     min_dist: 0.1
-    #     spread: 1.0
-    #     random_state: 42
-    # name: umap
 reducer_dataset:
 - kuhar.standartized_balanced[train]
 test_dataset:
@@ -64,8 +54,11 @@ test_dataset:
 train_dataset:
 - kuhar.standartized_balanced[train]
 transforms:
-- algorithm: reshaper
-  name: reshaper
-  kwargs:
-    subsamples_number: 6
+-   kwargs:
+        subsamples_number: 6
+    name: Reshaper
+    transform: reshaper
+    windowed:
+        fit_on: null
+        transform_on: all
 version: '1.0'
