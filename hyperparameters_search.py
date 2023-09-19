@@ -40,12 +40,14 @@ class CustomStopper(Stopper):
         print(f"Got result: {result[self._metric]} with id: {trial_id}")
         if result[self._metric] > 0:
             self._iterations += 1
+            self.results.append(result[self._metric])
             self.counter += 1
             if result[self._metric] > self.best_found:
                 self.best_found = result[self._metric]
                 self.counter = 0
-        print(f"Iterations: {self._iterations}")
-        print(f"Counter: {self.counter}")
+        # print(f"Iterations: {self._iterations}")
+        # print(f"Counter: {self.counter}")
+        print(f'Results: {self.results}')
         return self.stop_all()
     
     def stop_all(self):
