@@ -1,0 +1,976 @@
+additional:
+  end_time: 1695004709.8211553
+  start_time: 1695003925.1400058
+  system:
+    architecture: x86_64
+    hostname: 84233402a856
+    ip-address: 172.17.0.2
+    mac-address: 02:42:ac:11:00:02
+    physical_cores: 64
+    platform: Linux
+    platform-release: 5.15.0-78-generic
+    platform-version: '#85-Ubuntu SMP Fri Jul 7 15:25:09 UTC 2023'
+    processor: ''
+    ram: 1512 GB
+    total_cores: 128
+  total_time: 784.681149482727
+experiment:
+  estimators:
+  - algorithm: RandomForest
+    kwargs:
+      n_estimators: 100
+    name: randomforest-100
+    num_runs: 10
+  - algorithm: KNN
+    kwargs:
+      n_neighbors: 5
+    name: KNN-5
+    num_runs: 1
+  - algorithm: SVM
+    kwargs:
+      C: 1.0
+      kernel: rbf
+    name: SVM-rbf-C1.0
+    num_runs: 1
+  extra:
+    in_use_features:
+    - accel-x
+    - accel-y
+    - accel-z
+    - gyro-x
+    - gyro-y
+    - gyro-z
+    reduce_on: all
+    save_reducer: false
+    scale_on: train
+  reducer:
+    algorithm: convtae1d
+    kwargs:
+      batch_size: 64
+      cuda_device_name: cuda:0
+      extra_properties:
+        down_HL: 15
+        kernel_size: 5
+        num_CL: 6
+        num_HL: 2
+        optimizer_lr: 5.1852468887419225e-05
+        optimizer_weight_decay: 0.0
+        size_CL: 30
+        size_HL: 127
+      latent_dim: 317
+      model_lambda: 1
+      model_name: ConvTAE_def
+      num_epochs: 20000
+      patience: 100
+      save_frequency: 20001
+      save_tag: 0
+    name: AE
+  reducer_dataset:
+  - uci.standartized_balanced[train]
+  scaler: null
+  test_dataset:
+  - uci.standartized_balanced[validation]
+  train_dataset:
+  - uci.standartized_balanced[train]
+  transforms:
+  - kwargs:
+      subsamples_number: 6
+    name: Reshaper
+    transform: reshaper
+    windowed:
+      fit_on: null
+      transform_on: all
+  version: '1.0'
+report:
+- classification_time: 34.13453650474548
+  estimator:
+    algorithm: RandomForest
+    kwargs:
+      n_estimators: 100
+    name: randomforest-100
+    num_runs: 10
+  results:
+    runs:
+    - end: 1695004678.3718123
+      result:
+      - accuracy: 0.8235294117647058
+        classification report:
+          '0':
+            f1-score: 0.6122448979591837
+            precision: 0.569620253164557
+            recall: 0.6617647058823529
+            support: 68
+          '1':
+            f1-score: 0.5619834710743802
+            precision: 0.6415094339622641
+            recall: 0.5
+            support: 68
+          '2':
+            f1-score: 0.9784172661870503
+            precision: 0.9577464788732394
+            recall: 1.0
+            support: 68
+          '3':
+            f1-score: 0.9774436090225563
+            precision: 1.0
+            recall: 0.9558823529411765
+            support: 68
+          '4':
+            f1-score: 0.9714285714285714
+            precision: 0.9444444444444444
+            recall: 1.0
+            support: 68
+          accuracy: 0.8235294117647058
+          macro avg:
+            f1-score: 0.8203035631343484
+            precision: 0.8226641220889009
+            recall: 0.8235294117647058
+            support: 340
+          weighted avg:
+            f1-score: 0.8203035631343483
+            precision: 0.8226641220889009
+            recall: 0.8235294117647058
+            support: 340
+        confusion matrix:
+        - - 45
+          - 19
+          - 0
+          - 0
+          - 4
+        - - 34
+          - 34
+          - 0
+          - 0
+          - 0
+        - - 0
+          - 0
+          - 68
+          - 0
+          - 0
+        - - 0
+          - 0
+          - 3
+          - 65
+          - 0
+        - - 0
+          - 0
+          - 0
+          - 0
+          - 68
+        f1 score (macro): 0.8203035631343484
+        f1 score (micro): 0.8235294117647058
+        f1 score (weighted): 0.8203035631343483
+      run id: 1
+      start: 1695004675.022156
+      time taken: 3.349656343460083
+    - end: 1695004681.6713462
+      result:
+      - accuracy: 0.8264705882352941
+        classification report:
+          '0':
+            f1-score: 0.6164383561643835
+            precision: 0.5769230769230769
+            recall: 0.6617647058823529
+            support: 68
+          '1':
+            f1-score: 0.5737704918032787
+            precision: 0.6481481481481481
+            recall: 0.5147058823529411
+            support: 68
+          '2':
+            f1-score: 0.9855072463768115
+            precision: 0.9714285714285714
+            recall: 1.0
+            support: 68
+          '3':
+            f1-score: 0.9777777777777777
+            precision: 0.9850746268656716
+            recall: 0.9705882352941176
+            support: 68
+          '4':
+            f1-score: 0.9640287769784172
+            precision: 0.9436619718309859
+            recall: 0.9852941176470589
+            support: 68
+          accuracy: 0.8264705882352941
+          macro avg:
+            f1-score: 0.8235045298201337
+            precision: 0.8250472790392909
+            recall: 0.8264705882352942
+            support: 340
+          weighted avg:
+            f1-score: 0.8235045298201337
+            precision: 0.8250472790392909
+            recall: 0.8264705882352941
+            support: 340
+        confusion matrix:
+        - - 45
+          - 19
+          - 0
+          - 0
+          - 4
+        - - 33
+          - 35
+          - 0
+          - 0
+          - 0
+        - - 0
+          - 0
+          - 68
+          - 0
+          - 0
+        - - 0
+          - 0
+          - 2
+          - 66
+          - 0
+        - - 0
+          - 0
+          - 0
+          - 1
+          - 67
+        f1 score (macro): 0.8235045298201337
+        f1 score (micro): 0.826470588235294
+        f1 score (weighted): 0.8235045298201337
+      run id: 2
+      start: 1695004678.3718185
+      time taken: 3.299527645111084
+    - end: 1695004685.728776
+      result:
+      - accuracy: 0.8117647058823529
+        classification report:
+          '0':
+            f1-score: 0.6013071895424836
+            precision: 0.5411764705882353
+            recall: 0.6764705882352942
+            support: 68
+          '1':
+            f1-score: 0.5043478260869566
+            precision: 0.6170212765957447
+            recall: 0.4264705882352941
+            support: 68
+          '2':
+            f1-score: 0.9855072463768115
+            precision: 0.9714285714285714
+            recall: 1.0
+            support: 68
+          '3':
+            f1-score: 0.9777777777777777
+            precision: 0.9850746268656716
+            recall: 0.9705882352941176
+            support: 68
+          '4':
+            f1-score: 0.9640287769784172
+            precision: 0.9436619718309859
+            recall: 0.9852941176470589
+            support: 68
+          accuracy: 0.8117647058823529
+          macro avg:
+            f1-score: 0.8065937633524894
+            precision: 0.8116725834618418
+            recall: 0.8117647058823529
+            support: 340
+          weighted avg:
+            f1-score: 0.8065937633524893
+            precision: 0.8116725834618418
+            recall: 0.8117647058823529
+            support: 340
+        confusion matrix:
+        - - 46
+          - 18
+          - 0
+          - 0
+          - 4
+        - - 39
+          - 29
+          - 0
+          - 0
+          - 0
+        - - 0
+          - 0
+          - 68
+          - 0
+          - 0
+        - - 0
+          - 0
+          - 2
+          - 66
+          - 0
+        - - 0
+          - 0
+          - 0
+          - 1
+          - 67
+        f1 score (macro): 0.8065937633524894
+        f1 score (micro): 0.8117647058823529
+        f1 score (weighted): 0.8065937633524893
+      run id: 3
+      start: 1695004681.671351
+      time taken: 4.057425022125244
+    - end: 1695004688.9628232
+      result:
+      - accuracy: 0.8264705882352941
+        classification report:
+          '0':
+            f1-score: 0.608695652173913
+            precision: 0.6
+            recall: 0.6176470588235294
+            support: 68
+          '1':
+            f1-score: 0.6153846153846154
+            precision: 0.6451612903225806
+            recall: 0.5882352941176471
+            support: 68
+          '2':
+            f1-score: 0.9645390070921985
+            precision: 0.9315068493150684
+            recall: 1.0
+            support: 68
+          '3':
+            f1-score: 0.9618320610687023
+            precision: 1.0
+            recall: 0.9264705882352942
+            support: 68
+          '4':
+            f1-score: 0.9714285714285714
+            precision: 0.9444444444444444
+            recall: 1.0
+            support: 68
+          accuracy: 0.8264705882352941
+          macro avg:
+            f1-score: 0.8243759814296002
+            precision: 0.8242225168164188
+            recall: 0.8264705882352942
+            support: 340
+          weighted avg:
+            f1-score: 0.8243759814296
+            precision: 0.8242225168164187
+            recall: 0.8264705882352941
+            support: 340
+        confusion matrix:
+        - - 42
+          - 22
+          - 0
+          - 0
+          - 4
+        - - 28
+          - 40
+          - 0
+          - 0
+          - 0
+        - - 0
+          - 0
+          - 68
+          - 0
+          - 0
+        - - 0
+          - 0
+          - 5
+          - 63
+          - 0
+        - - 0
+          - 0
+          - 0
+          - 0
+          - 68
+        f1 score (macro): 0.8243759814296002
+        f1 score (micro): 0.826470588235294
+        f1 score (weighted): 0.8243759814296
+      run id: 4
+      start: 1695004685.7287822
+      time taken: 3.2340409755706787
+    - end: 1695004692.2969816
+      result:
+      - accuracy: 0.8117647058823529
+        classification report:
+          '0':
+            f1-score: 0.6092715231788081
+            precision: 0.5542168674698795
+            recall: 0.6764705882352942
+            support: 68
+          '1':
+            f1-score: 0.5299145299145299
+            precision: 0.6326530612244898
+            recall: 0.45588235294117646
+            support: 68
+          '2':
+            f1-score: 0.9784172661870503
+            precision: 0.9577464788732394
+            recall: 1.0
+            support: 68
+          '3':
+            f1-score: 0.9701492537313432
+            precision: 0.9848484848484849
+            recall: 0.9558823529411765
+            support: 68
+          '4':
+            f1-score: 0.9496402877697842
+            precision: 0.9295774647887324
+            recall: 0.9705882352941176
+            support: 68
+          accuracy: 0.8117647058823529
+          macro avg:
+            f1-score: 0.8074785721563031
+            precision: 0.8118084714409651
+            recall: 0.8117647058823529
+            support: 340
+          weighted avg:
+            f1-score: 0.8074785721563031
+            precision: 0.8118084714409651
+            recall: 0.8117647058823529
+            support: 340
+        confusion matrix:
+        - - 46
+          - 18
+          - 0
+          - 0
+          - 4
+        - - 37
+          - 31
+          - 0
+          - 0
+          - 0
+        - - 0
+          - 0
+          - 68
+          - 0
+          - 0
+        - - 0
+          - 0
+          - 2
+          - 65
+          - 1
+        - - 0
+          - 0
+          - 1
+          - 1
+          - 66
+        f1 score (macro): 0.8074785721563031
+        f1 score (micro): 0.8117647058823529
+        f1 score (weighted): 0.8074785721563031
+      run id: 5
+      start: 1695004688.962828
+      time taken: 3.334153652191162
+    - end: 1695004695.5881083
+      result:
+      - accuracy: 0.8058823529411765
+        classification report:
+          '0':
+            f1-score: 0.5866666666666668
+            precision: 0.5365853658536586
+            recall: 0.6470588235294118
+            support: 68
+          '1':
+            f1-score: 0.5084745762711865
+            precision: 0.6
+            recall: 0.4411764705882353
+            support: 68
+          '2':
+            f1-score: 0.9784172661870503
+            precision: 0.9577464788732394
+            recall: 1.0
+            support: 68
+          '3':
+            f1-score: 0.9701492537313432
+            precision: 0.9848484848484849
+            recall: 0.9558823529411765
+            support: 68
+          '4':
+            f1-score: 0.9640287769784172
+            precision: 0.9436619718309859
+            recall: 0.9852941176470589
+            support: 68
+          accuracy: 0.8058823529411765
+          macro avg:
+            f1-score: 0.8015473079669327
+            precision: 0.8045684602812738
+            recall: 0.8058823529411765
+            support: 340
+          weighted avg:
+            f1-score: 0.8015473079669327
+            precision: 0.8045684602812736
+            recall: 0.8058823529411765
+            support: 340
+        confusion matrix:
+        - - 44
+          - 20
+          - 0
+          - 0
+          - 4
+        - - 38
+          - 30
+          - 0
+          - 0
+          - 0
+        - - 0
+          - 0
+          - 68
+          - 0
+          - 0
+        - - 0
+          - 0
+          - 3
+          - 65
+          - 0
+        - - 0
+          - 0
+          - 0
+          - 1
+          - 67
+        f1 score (macro): 0.8015473079669327
+        f1 score (micro): 0.8058823529411765
+        f1 score (weighted): 0.8015473079669327
+      run id: 6
+      start: 1695004692.2969904
+      time taken: 3.2911179065704346
+    - end: 1695004699.1319866
+      result:
+      - accuracy: 0.8294117647058824
+        classification report:
+          '0':
+            f1-score: 0.6351351351351351
+            precision: 0.5875
+            recall: 0.6911764705882353
+            support: 68
+          '1':
+            f1-score: 0.5833333333333334
+            precision: 0.6730769230769231
+            recall: 0.5147058823529411
+            support: 68
+          '2':
+            f1-score: 0.9784172661870503
+            precision: 0.9577464788732394
+            recall: 1.0
+            support: 68
+          '3':
+            f1-score: 0.9701492537313432
+            precision: 0.9848484848484849
+            recall: 0.9558823529411765
+            support: 68
+          '4':
+            f1-score: 0.9640287769784172
+            precision: 0.9436619718309859
+            recall: 0.9852941176470589
+            support: 68
+          accuracy: 0.8294117647058824
+          macro avg:
+            f1-score: 0.8262127530730558
+            precision: 0.8293667717259267
+            recall: 0.8294117647058824
+            support: 340
+          weighted avg:
+            f1-score: 0.8262127530730559
+            precision: 0.8293667717259267
+            recall: 0.8294117647058824
+            support: 340
+        confusion matrix:
+        - - 47
+          - 17
+          - 0
+          - 0
+          - 4
+        - - 33
+          - 35
+          - 0
+          - 0
+          - 0
+        - - 0
+          - 0
+          - 68
+          - 0
+          - 0
+        - - 0
+          - 0
+          - 3
+          - 65
+          - 0
+        - - 0
+          - 0
+          - 0
+          - 1
+          - 67
+        f1 score (macro): 0.8262127530730558
+        f1 score (micro): 0.8294117647058825
+        f1 score (weighted): 0.8262127530730559
+      run id: 7
+      start: 1695004695.5881174
+      time taken: 3.5438692569732666
+    - end: 1695004702.4335227
+      result:
+      - accuracy: 0.8470588235294118
+        classification report:
+          '0':
+            f1-score: 0.6478873239436619
+            precision: 0.6216216216216216
+            recall: 0.6764705882352942
+            support: 68
+          '1':
+            f1-score: 0.6349206349206349
+            precision: 0.6896551724137931
+            recall: 0.5882352941176471
+            support: 68
+          '2':
+            f1-score: 0.9855072463768115
+            precision: 0.9714285714285714
+            recall: 1.0
+            support: 68
+          '3':
+            f1-score: 0.9850746268656716
+            precision: 1.0
+            recall: 0.9705882352941176
+            support: 68
+          '4':
+            f1-score: 0.9714285714285714
+            precision: 0.9444444444444444
+            recall: 1.0
+            support: 68
+          accuracy: 0.8470588235294118
+          macro avg:
+            f1-score: 0.8449636807070704
+            precision: 0.8454299619816862
+            recall: 0.8470588235294118
+            support: 340
+          weighted avg:
+            f1-score: 0.8449636807070704
+            precision: 0.8454299619816861
+            recall: 0.8470588235294118
+            support: 340
+        confusion matrix:
+        - - 46
+          - 18
+          - 0
+          - 0
+          - 4
+        - - 28
+          - 40
+          - 0
+          - 0
+          - 0
+        - - 0
+          - 0
+          - 68
+          - 0
+          - 0
+        - - 0
+          - 0
+          - 2
+          - 66
+          - 0
+        - - 0
+          - 0
+          - 0
+          - 0
+          - 68
+        f1 score (macro): 0.8449636807070704
+        f1 score (micro): 0.8470588235294118
+        f1 score (weighted): 0.8449636807070704
+      run id: 8
+      start: 1695004699.1319947
+      time taken: 3.301527976989746
+    - end: 1695004705.7269049
+      result:
+      - accuracy: 0.8441176470588235
+        classification report:
+          '0':
+            f1-score: 0.6620689655172415
+            precision: 0.6233766233766234
+            recall: 0.7058823529411765
+            support: 68
+          '1':
+            f1-score: 0.6341463414634145
+            precision: 0.7090909090909091
+            recall: 0.5735294117647058
+            support: 68
+          '2':
+            f1-score: 0.9784172661870503
+            precision: 0.9577464788732394
+            recall: 1.0
+            support: 68
+          '3':
+            f1-score: 0.9701492537313432
+            precision: 0.9848484848484849
+            recall: 0.9558823529411765
+            support: 68
+          '4':
+            f1-score: 0.9640287769784172
+            precision: 0.9436619718309859
+            recall: 0.9852941176470589
+            support: 68
+          accuracy: 0.8441176470588235
+          macro avg:
+            f1-score: 0.8417621207754934
+            precision: 0.8437448936040486
+            recall: 0.8441176470588235
+            support: 340
+          weighted avg:
+            f1-score: 0.8417621207754934
+            precision: 0.8437448936040486
+            recall: 0.8441176470588235
+            support: 340
+        confusion matrix:
+        - - 48
+          - 16
+          - 0
+          - 0
+          - 4
+        - - 29
+          - 39
+          - 0
+          - 0
+          - 0
+        - - 0
+          - 0
+          - 68
+          - 0
+          - 0
+        - - 0
+          - 0
+          - 3
+          - 65
+          - 0
+        - - 0
+          - 0
+          - 0
+          - 1
+          - 67
+        f1 score (macro): 0.8417621207754934
+        f1 score (micro): 0.8441176470588234
+        f1 score (weighted): 0.8417621207754934
+      run id: 9
+      start: 1695004702.4335306
+      time taken: 3.2933743000030518
+    - end: 1695004709.156668
+      result:
+      - accuracy: 0.8029411764705883
+        classification report:
+          '0':
+            f1-score: 0.553191489361702
+            precision: 0.5342465753424658
+            recall: 0.5735294117647058
+            support: 68
+          '1':
+            f1-score: 0.5354330708661418
+            precision: 0.576271186440678
+            recall: 0.5
+            support: 68
+          '2':
+            f1-score: 0.9784172661870503
+            precision: 0.9577464788732394
+            recall: 1.0
+            support: 68
+          '3':
+            f1-score: 0.9701492537313432
+            precision: 0.9848484848484849
+            recall: 0.9558823529411765
+            support: 68
+          '4':
+            f1-score: 0.9640287769784172
+            precision: 0.9436619718309859
+            recall: 0.9852941176470589
+            support: 68
+          accuracy: 0.8029411764705883
+          macro avg:
+            f1-score: 0.800243971424931
+            precision: 0.7993549394671708
+            recall: 0.8029411764705883
+            support: 340
+          weighted avg:
+            f1-score: 0.8002439714249309
+            precision: 0.7993549394671708
+            recall: 0.8029411764705883
+            support: 340
+        confusion matrix:
+        - - 39
+          - 25
+          - 0
+          - 0
+          - 4
+        - - 34
+          - 34
+          - 0
+          - 0
+          - 0
+        - - 0
+          - 0
+          - 68
+          - 0
+          - 0
+        - - 0
+          - 0
+          - 3
+          - 65
+          - 0
+        - - 0
+          - 0
+          - 0
+          - 1
+          - 67
+        f1 score (macro): 0.800243971424931
+        f1 score (micro): 0.8029411764705883
+        f1 score (weighted): 0.8002439714249309
+      run id: 10
+      start: 1695004705.7269158
+      time taken: 3.4297521114349365
+- classification_time: 0.044838666915893555
+  estimator:
+    algorithm: KNN
+    kwargs:
+      n_neighbors: 5
+    name: KNN-5
+    num_runs: 1
+  results:
+    runs:
+    - end: 1695004709.2016842
+      result:
+      - accuracy: 0.7823529411764706
+        classification report:
+          '0':
+            f1-score: 0.6832298136645962
+            precision: 0.5913978494623656
+            recall: 0.8088235294117647
+            support: 68
+          '1':
+            f1-score: 0.5405405405405405
+            precision: 0.6976744186046512
+            recall: 0.4411764705882353
+            support: 68
+          '2':
+            f1-score: 0.8662420382165604
+            precision: 0.7640449438202247
+            recall: 1.0
+            support: 68
+          '3':
+            f1-score: 0.88
+            precision: 0.9649122807017544
+            recall: 0.8088235294117647
+            support: 68
+          '4':
+            f1-score: 0.9206349206349206
+            precision: 1.0
+            recall: 0.8529411764705882
+            support: 68
+          accuracy: 0.7823529411764706
+          macro avg:
+            f1-score: 0.7781294626113235
+            precision: 0.8036058985177992
+            recall: 0.7823529411764706
+            support: 340
+          weighted avg:
+            f1-score: 0.7781294626113235
+            precision: 0.8036058985177991
+            recall: 0.7823529411764706
+            support: 340
+        confusion matrix:
+        - - 55
+          - 13
+          - 0
+          - 0
+          - 0
+        - - 38
+          - 30
+          - 0
+          - 0
+          - 0
+        - - 0
+          - 0
+          - 68
+          - 0
+          - 0
+        - - 0
+          - 0
+          - 13
+          - 55
+          - 0
+        - - 0
+          - 0
+          - 8
+          - 2
+          - 58
+        f1 score (macro): 0.7781294626113235
+        f1 score (micro): 0.7823529411764706
+        f1 score (weighted): 0.7781294626113235
+      run id: 1
+      start: 1695004709.156854
+      time taken: 0.044830322265625
+- classification_time: 0.619349479675293
+  estimator:
+    algorithm: SVM
+    kwargs:
+      C: 1.0
+      kernel: rbf
+    name: SVM-rbf-C1.0
+    num_runs: 1
+  results:
+    runs:
+    - end: 1695004709.8210995
+      result:
+      - accuracy: 0.7764705882352941
+        classification report:
+          '0':
+            f1-score: 0.05714285714285715
+            precision: 1.0
+            recall: 0.029411764705882353
+            support: 68
+          '1':
+            f1-score: 0.6799999999999999
+            precision: 0.5151515151515151
+            recall: 1.0
+            support: 68
+          '2':
+            f1-score: 0.9315068493150686
+            precision: 0.8717948717948718
+            recall: 1.0
+            support: 68
+          '3':
+            f1-score: 0.9291338582677166
+            precision: 1.0
+            recall: 0.8676470588235294
+            support: 68
+          '4':
+            f1-score: 0.9781021897810219
+            precision: 0.9710144927536232
+            recall: 0.9852941176470589
+            support: 68
+          accuracy: 0.7764705882352941
+          macro avg:
+            f1-score: 0.7151771509013328
+            precision: 0.871592175940002
+            recall: 0.7764705882352941
+            support: 340
+          weighted avg:
+            f1-score: 0.7151771509013328
+            precision: 0.871592175940002
+            recall: 0.7764705882352941
+            support: 340
+        confusion matrix:
+        - - 2
+          - 64
+          - 0
+          - 0
+          - 2
+        - - 0
+          - 68
+          - 0
+          - 0
+          - 0
+        - - 0
+          - 0
+          - 68
+          - 0
+          - 0
+        - - 0
+          - 0
+          - 9
+          - 59
+          - 0
+        - - 0
+          - 0
+          - 1
+          - 0
+          - 67
+        f1 score (macro): 0.7151771509013328
+        f1 score (micro): 0.7764705882352941
+        f1 score (weighted): 0.7151771509013328
+      run id: 1
+      start: 1695004709.201758
+      time taken: 0.6193416118621826
