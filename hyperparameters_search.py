@@ -13,11 +13,40 @@ from copy import deepcopy
 from dacite import from_dict
 from ray.tune import Callback
 import random
+from ray.tune.stopper import Stopper
+import numpy as np
 
 
 class BestResultCallback(Callback):
     def on_trial_result(self, iteration, trials, trial, result, **info):
         print(f"Got result: {result['score']}")
+
+class CustomStopper(Stopper):
+    def __init__(
+        self,
+        metric: str,
+        min: int = 1000,
+        patience: int = 100,
+    ):
+        self._metric = metric
+        self._patience = patience
+        self._iterations = 0
+        self._min = min
+        self.max_threshold = np.inf
+        self.counter = 0
+        self.results = []
+
+    def __call__(self, trial_id, result):
+        if result[self._metric] > 0:
+            self._iterations += 1
+            self.counter += 1
+            if result[self._metric] < self.max_threshold:
+                self.max_threshold = result[self._metric]
+                self.counter = 0
+        return self.stop_all()
+    
+    def stop_all(self):
+        return self._iterations > self._min and self.counter > self._patience
 
 def my_objective_function(
         config,
@@ -120,7 +149,8 @@ def hyperparameters_search(
         run_config=air.RunConfig(
             name=str(experiment_full_path).split('/')[-1],
             callbacks=[BestResultCallback()],
-            stop=ExperimentPlateauStopper(metric="score", std=0.001, top=10, mode="max", patience=0)
+            stop=CustomStopper(metric="score", min=1000, patience=100)
+            # stop=ExperimentPlateauStopper(metric="score", std=0.001, top=10, mode="max", patience=0)
         ),
         param_space=search_space
     )

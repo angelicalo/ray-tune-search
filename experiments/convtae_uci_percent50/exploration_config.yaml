@@ -1,0 +1,41 @@
+resources:
+  gpu: 0.2
+  cpu: 1.0
+search_space:
+  num_CL:
+    tune_function: randint
+    tune_parameters: [2, 9]
+    route: reducer/kwargs/extra_properties/num_CL
+  num_HL:
+    tune_function: randint
+    tune_parameters: [2, 9]
+    route: reducer/kwargs/extra_properties/num_HL
+  size_CL:
+    tune_function: randint
+    tune_parameters: [2, 33]
+    route: reducer/kwargs/extra_properties/size_CL
+  size_HL:
+    tune_function: randint
+    tune_parameters: [20, 151]
+    route: reducer/kwargs/extra_properties/size_HL
+  down_HL:
+    tune_function: randint
+    tune_parameters: [0, 20]
+    route: reducer/kwargs/extra_properties/down_HL
+  kernel_size:
+    tune_function: randint
+    tune_parameters: [2, 10]
+    route: reducer/kwargs/extra_properties/kernel_size
+  latent_dim:
+    tune_function: randint
+    tune_parameters: [2, 31]
+    route: reducer/kwargs/latent_dim
+  opt_lr:
+    tune_function: loguniform
+    tune_parameters: [0.00001, 0.001]
+    route: reducer/kwargs/extra_properties/optimizer_lr
+  # opt_wd:
+  #   tune_function: uniform
+  #   tune_parameters: [0, 0.000001]
+  #   route: reducer/kwargs/extra_properties/optimizer_weight_decay
+initial_params:
