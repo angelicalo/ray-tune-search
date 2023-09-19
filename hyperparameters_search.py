@@ -32,17 +32,20 @@ class CustomStopper(Stopper):
         self._patience = patience
         self._iterations = 0
         self._min = min
-        self.max_threshold = np.inf
+        self.best_found = 0
         self.counter = 0
         self.results = []
 
     def __call__(self, trial_id, result):
+        print(f"Got result: {result[self._metric]} with id: {trial_id}")
         if result[self._metric] > 0:
             self._iterations += 1
             self.counter += 1
-            if result[self._metric] < self.max_threshold:
-                self.max_threshold = result[self._metric]
+            if result[self._metric] > self.best_found:
+                self.best_found = result[self._metric]
                 self.counter = 0
+        print(f"Iterations: {self._iterations}")
+        print(f"Counter: {self.counter}")
         return self.stop_all()
     
     def stop_all(self):
