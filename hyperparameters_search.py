@@ -34,20 +34,21 @@ class CustomStopper(Stopper):
         self._min = min
         self.best_found = 0
         self.counter = 0
-        self.results = []
+        self.trial_ids = []
+        # self.results = []
 
     def __call__(self, trial_id, result):
-        print(f"Got result: {result[self._metric]} with id: {trial_id}")
-        if result[self._metric] > 0:
+        if trial_id not in self.trial_ids and result[self._metric] > 0:
+            self.trial_ids.append(trial_id)
             self._iterations += 1
-            self.results.append(result[self._metric])
+            # self.results.append(result[self._metric])
             self.counter += 1
             if result[self._metric] > self.best_found:
                 self.best_found = result[self._metric]
                 self.counter = 0
         # print(f"Iterations: {self._iterations}")
         # print(f"Counter: {self.counter}")
-        print(f'Results: {self.results}')
+        # print(f'Results: {self.results}')
         return self.stop_all()
     
     def stop_all(self):
@@ -154,7 +155,7 @@ def hyperparameters_search(
         run_config=air.RunConfig(
             name=str(experiment_full_path).split('/')[-1],
             callbacks=[BestResultCallback()],
-            stop=CustomStopper(metric="score", min=10, patience=5)
+            stop=CustomStopper(metric="score", min=5, patience=2)
             # stop=ExperimentPlateauStopper(metric="score", std=0.001, top=10, mode="max", patience=0)
         ),
         param_space=search_space
