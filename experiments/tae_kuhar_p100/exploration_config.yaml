@@ -1,29 +1,33 @@
 resources:
-  gpu: 0.2
+  gpu: 0.25
   cpu: 1.0
 search_space:
-  # num_CL:
-  #   tune_function: randint
-  #   tune_parameters: [2, 9]
-  #   route: reducer/kwargs/extra_properties/num_CL
+  batch_size:
+    tune_function: choice
+    tune_parameters: [[32, 64, 128, 256]]
+    route: reducer/kwargs/batch_size
   num_HL:
     tune_function: randint
     tune_parameters: [2, 9]
     route: reducer/kwargs/extra_properties/num_HL
-  size_CL:
+  down_HL:
     tune_function: randint
-    tune_parameters: [2, 33]
-    route: reducer/kwargs/extra_properties/size_CL
+    tune_parameters: [2, 20]
+    route: reducer/kwargs/extra_properties/down_HL
   size_HL:
     tune_function: randint
-    tune_parameters: [20, 151]
+    tune_parameters: [20, 400]
     route: reducer/kwargs/extra_properties/size_HL
   latent_dim:
     tune_function: randint
     tune_parameters: [2, 361]
     route: reducer/kwargs/latent_dim
-  model_lamda:
+  opt_lr:
+    tune_function: loguniform
+    tune_parameters: [0.00001, 0.001]
+    route: reducer/kwargs/extra_properties/optimizer_lr
+  opt_wd:
     tune_function: uniform
-    tune_parameters: [0.0, 2.0]
-    route: reducer/kwargs/model_lambda
+    tune_parameters: [0, 0.00001]
+    route: reducer/kwargs/extra_properties/optimizer_weight_decay
 initial_params:
