@@ -155,7 +155,7 @@ def hyperparameters_search(
         run_config=air.RunConfig(
             name=str(experiment_full_path).split('/')[-1],
             callbacks=[BestResultCallback()],
-            stop=CustomStopper(metric="score", min=5, patience=2)
+            stop=CustomStopper(metric="score", min=1000, patience=100)
             # stop=ExperimentPlateauStopper(metric="score", std=0.001, top=10, mode="max", patience=0)
         ),
         param_space=search_space
