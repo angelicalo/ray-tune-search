@@ -88,19 +88,22 @@ def my_objective_function(
 # TO MODIFY: EXECUTE HYPERPARAMETERS SEARCH
 def hyperparameters_search(
         # search_space, initial_params, dataset, experiment_name,
-        max_concurrent=5, random_state=42, dataset_locations=None,
+        # max_concurrent=5, random_state=42,
+        dataset_locations=None,
         # resources={"cpu": 1, "gpu": 0},
         base_config=None,
-        exploration_config=None, experiment_full_path=None, time_budget=3600*12):
+        exploration_config=None, experiment_full_path=None,
+        # time_budget=None,
+        experiment_info=None):
     
 
 
     # Set the random state
-    set_random_state(random_state)
+    set_random_state(experiment_info['random_state'])
 
-    print("TUNE_ORIG_WORKING_DIR:", os.environ.get("TUNE_ORIG_WORKING_DIR"))
-    print("TUNE_WORKING_DIR:", os.environ.get("TUNE_WORKING_DIR"))
-    print("TUNE_RESULT_DIR:", os.environ.get("TUNE_RESULT_DIR"))
+    # print("TUNE_ORIG_WORKING_DIR:", os.environ.get("TUNE_ORIG_WORKING_DIR"))
+    # print("TUNE_WORKING_DIR:", os.environ.get("TUNE_WORKING_DIR"))
+    # print("TUNE_RESULT_DIR:", os.environ.get("TUNE_RESULT_DIR"))
 
     # Get the search space, initial params and experiment name from the config file
     search_space = {
@@ -118,7 +121,7 @@ def hyperparameters_search(
     os.makedirs(save_folder, exist_ok=True)
 
     hyperopt = HyperOptSearch(points_to_evaluate=initial_params)
-    hyperopt = ConcurrencyLimiter(hyperopt, max_concurrent=max_concurrent)
+    hyperopt = ConcurrencyLimiter(hyperopt, max_concurrent=experiment_info['max_concurrent'])
 
     # Initializing the trainable
     trainable = my_objective_function
@@ -150,7 +153,7 @@ def hyperparameters_search(
             num_samples=-1,
             scheduler=ASHAScheduler(),
             search_alg=hyperopt,
-            time_budget_s=time_budget,
+            time_budget_s=experiment_info['time_budget'],
         ),
         run_config=air.RunConfig(
             name=str(experiment_full_path).split('/')[-1],
