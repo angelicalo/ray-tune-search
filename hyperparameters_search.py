@@ -81,7 +81,8 @@ def my_objective_function(
         )
     except Exception as e:
         print(e)
-        result = {'score': random.uniform(-20, -10)}
+        # result = {'score': random.uniform(-20, -10)}
+        result = {'score': -0.1}
     session.report(result)
 
 
