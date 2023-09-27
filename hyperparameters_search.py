@@ -21,8 +21,8 @@ class BestResultCallback(Callback):
 
     def __init__(self, experiment_full_path):
         self.experiment_full_path = experiment_full_path
-        self.data = pd.DataFrame(columns=['iteration', 'trial_id', 'score', 'config'])
-        self.data.to_csv(f"{self.experiment_full_path}/callback_data.csv", index=False)
+        self.data = []
+        self.counter = 0
 
     def on_trial_result(self, iteration, trials, trial, result, **info):
         new_row = {
@@ -31,8 +31,11 @@ class BestResultCallback(Callback):
             'score': result['score'],
             'config': result['config']
         }
-        self.data = self.data.append(new_row, ignore_index=True)
-        self.data.to_csv(f"{self.experiment_full_path}/callback_data.csv", index=False)
+        self.data.append(new_row)
+        self.counter += 1
+        if self.counter % 200 == 0:
+            data_df = pd.DataFrame(self.data)
+            data_df.to_csv(f"{self.experiment_full_path}/callback_data.csv", index=False)
         # print(f"Got result: {result['score']}")
 
 class CustomStopper(Stopper):
