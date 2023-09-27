@@ -15,11 +15,25 @@ from ray.tune import Callback
 import random
 from ray.tune.stopper import Stopper
 import numpy as np
-
+import pandas as pd
 
 class BestResultCallback(Callback):
+
+    def __init__(self, experiment_full_path):
+        self.experiment_full_path = experiment_full_path
+        self.data = pd.DataFrame(columns=['iteration', 'trial_id', 'score', 'config'])
+        self.data.to_csv(f"{self.experiment_full_path}/callback_data.csv", index=False)
+
     def on_trial_result(self, iteration, trials, trial, result, **info):
-        print(f"Got result: {result['score']}")
+        new_row = {
+            'iteration': iteration,
+            'trial_id': trial.trial_id,
+            'score': result['score'],
+            'config': result['config']
+        }
+        self.data = self.data.append(new_row, ignore_index=True)
+        self.data.to_csv(f"{self.experiment_full_path}/callback_data.csv", index=False)
+        # print(f"Got result: {result['score']}")
 
 class CustomStopper(Stopper):
     def __init__(
@@ -158,7 +172,7 @@ def hyperparameters_search(
         ),
         run_config=air.RunConfig(
             name=str(experiment_full_path).split('/')[-1],
-            callbacks=[BestResultCallback()],
+            callbacks=[BestResultCallback(experiment_full_path)],
             stop=CustomStopper(metric="score", min=1000, patience=100)
             # stop=ExperimentPlateauStopper(metric="score", std=0.001, top=10, mode="max", patience=0)
         ),
