@@ -119,9 +119,9 @@ def hyperparameters_search(
     # Set the random state
     set_random_state(experiment_info['random_state'])
 
-    # print("TUNE_ORIG_WORKING_DIR:", os.environ.get("TUNE_ORIG_WORKING_DIR"))
-    # print("TUNE_WORKING_DIR:", os.environ.get("TUNE_WORKING_DIR"))
-    # print("TUNE_RESULT_DIR:", os.environ.get("TUNE_RESULT_DIR"))
+    print("TUNE_ORIG_WORKING_DIR:", os.environ.get("TUNE_ORIG_WORKING_DIR"))
+    print("TUNE_WORKING_DIR:", os.environ.get("TUNE_WORKING_DIR"))
+    print("TUNE_RESULT_DIR:", os.environ.get("TUNE_RESULT_DIR"))
 
     # Get the search space, initial params and experiment name from the config file
     search_space = {
