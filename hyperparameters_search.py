@@ -120,7 +120,7 @@ def hyperparameters_search(
 
     # Set the random state
     set_random_state(experiment_info['random_state'])
-    ray.init()
+    # ray.init()
 
     print("TUNE_ORIG_WORKING_DIR:", os.environ.get("TUNE_ORIG_WORKING_DIR"))
     print("TUNE_WORKING_DIR:", os.environ.get("TUNE_WORKING_DIR"))
