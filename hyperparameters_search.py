@@ -155,7 +155,6 @@ def hyperparameters_search(
     )
     # Allocating the resources needed
     trainable = tune.with_resources(trainable=trainable, resources=resources)
-
     tuner = tune.Tuner(
         # tune.with_parameters(
         #     my_objective_function,
@@ -181,8 +180,9 @@ def hyperparameters_search(
         ),
         param_space=search_space
     )
-
+    print('Starting the hyperparameters search...')
     results = tuner.fit()
+    print('Finished the hyperparameters search...')
     # Save results in a csv file
     results.get_dataframe().to_csv(f"{experiment_full_path}/data.csv")
     # Report the best result
