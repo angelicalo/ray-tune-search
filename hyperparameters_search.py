@@ -84,6 +84,9 @@ def my_objective_function(
         route = search_space[key]['route'].split('/')
         property_to_modify = basic_experiment_configuration
         for key, item in enumerate(route[:-1]):
+            # If item is a number, then it is a list
+            if item.isdigit():
+                item = int(item)
             property_to_modify = property_to_modify[item]
         property_to_modify[route[-1]] = value
     # print('EXPERIMENT'*10, basic_experiment_configuration)
