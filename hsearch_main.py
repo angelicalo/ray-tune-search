@@ -38,6 +38,7 @@ def main(args):
     gpu = args.gpu
     if gpu != -1:
         exploration_config['resources']['gpu'] = gpu
+    
 
     
     # ESTABLECER EL CODIGO PARA EL TIPO DE STOPPER
@@ -47,7 +48,8 @@ def main(args):
     experiment_info = {
         'max_concurrent': args.max_concurrent,
         'random_state': args.random_state,
-        'time_budget': time_budget
+        'time_budget': time_budget,
+        'restore': args.restore,
         # 'type_stopper': 
         # 'stopper_custom': args.stopper_custom
     }
@@ -137,6 +139,13 @@ if __name__=="__main__":
         help="GPU resources per trial",
         type=float,
         default=-1.0,
+        required=False,
+    )
+    parser.add_argument(
+        "--restore",
+        help="Restore the experiment",
+        type=bool,
+        default=False,
         required=False,
     )
     # parser.add_argument(
