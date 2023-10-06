@@ -144,9 +144,7 @@ if __name__=="__main__":
     parser.add_argument(
         "--restore",
         help="Restore the experiment",
-        type=bool,
-        default=False,
-        required=False,
+        action="store_true",
     )
     # parser.add_argument(
     #     "--experiment_name",
