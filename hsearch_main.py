@@ -130,14 +130,14 @@ if __name__=="__main__":
         help="CPU resources per trial",
         type=float,
         default=-1.0,
-        required=True,
+        required=False,
     )
     parser.add_argument(
         "--gpu",
         help="GPU resources per trial",
         type=float,
         default=-1.0,
-        required=True,
+        required=False,
     )
     # parser.add_argument(
     #     "--experiment_name",
