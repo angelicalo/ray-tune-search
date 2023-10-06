@@ -31,6 +31,13 @@ def main(args):
     time_budget = args.time_budget
     if time_budget == -1:
         time_budget = None
+    
+    cpu = args.cpu
+    if cpu != -1:
+        exploration_config['resources']['cpu'] = cpu
+    gpu = args.gpu
+    if gpu != -1:
+        exploration_config['resources']['gpu'] = gpu
 
     
     # ESTABLECER EL CODIGO PARA EL TIPO DE STOPPER
@@ -116,6 +123,20 @@ if __name__=="__main__":
         "--experiment",
         help="Experiment folder",
         type=str,
+        required=True,
+    )
+    parser.add_argument(
+        "--cpu",
+        help="CPU resources per trial",
+        type=float,
+        default=-1.0,
+        required=True,
+    )
+    parser.add_argument(
+        "--gpu",
+        help="GPU resources per trial",
+        type=float,
+        default=-1.0,
         required=True,
     )
     # parser.add_argument(
