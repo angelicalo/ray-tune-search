@@ -124,10 +124,6 @@ def hyperparameters_search(
     # Set the random state
     set_random_state(experiment_info['random_state'])
 
-    # print("TUNE_ORIG_WORKING_DIR:", os.environ.get("TUNE_ORIG_WORKING_DIR"))
-    # print("TUNE_WORKING_DIR:", os.environ.get("TUNE_WORKING_DIR"))
-    # print("TUNE_RESULT_DIR:", os.environ.get("TUNE_RESULT_DIR"))
-
     # Get the search space, initial params and experiment name from the config file
     search_space = {
         key: getattr(tune, value['tune_function'])(*value['tune_parameters'])
@@ -180,6 +176,10 @@ def hyperparameters_search(
     )
     if experiment_info['restore']:
         print('Restoring the hyperparameters search...')
+        print("TUNE_ORIG_WORKING_DIR:", os.environ.get("TUNE_ORIG_WORKING_DIR"))
+        print("TUNE_WORKING_DIR:", os.environ.get("TUNE_WORKING_DIR"))
+        print("TUNE_RESULT_DIR:", os.environ.get("TUNE_RESULT_DIR"))
+
         tuner = tune.Tuner.restore(str(experiment_full_path).split('/')[-1], trainable=trainable)
     print('Starting the hyperparameters search...')
     results = tuner.fit()
