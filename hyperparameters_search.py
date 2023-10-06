@@ -180,7 +180,7 @@ def hyperparameters_search(
     )
     if experiment_info['restore']:
         print('Restoring the hyperparameters search...')
-        tuner = tune.Tuner.restore(str(experiment_full_path).split('/')[-1], trainable=trainable, recover_last=True)
+        tuner = tune.Tuner.restore(str(experiment_full_path).split('/')[-1], trainable=trainable)
     print('Starting the hyperparameters search...')
     results = tuner.fit()
     print('Finished the hyperparameters search...')
