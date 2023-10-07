@@ -17,6 +17,7 @@ from ray.tune.stopper import Stopper
 import numpy as np
 import pandas as pd
 import ray
+from pathlib import Path
 
 
 class BestResultCallback(Callback):
@@ -179,8 +180,8 @@ def hyperparameters_search(
         print("TUNE_ORIG_WORKING_DIR:", os.environ.get("TUNE_ORIG_WORKING_DIR"))
         print("TUNE_WORKING_DIR:", os.environ.get("TUNE_WORKING_DIR"))
         print("TUNE_RESULT_DIR:", os.environ.get("TUNE_RESULT_DIR"))
-
-        tuner = tune.Tuner.restore(str(experiment_full_path).split('/')[-1], trainable=trainable)
+        restore_path = f'/../../ray-results/{str(experiment_full_path).split("/")[-1]}'
+        tuner = tune.Tuner.restore(path=Path(restore_path).absolute(), trainable=trainable)
     print('Starting the hyperparameters search...')
     results = tuner.fit()
     print('Finished the hyperparameters search...')
