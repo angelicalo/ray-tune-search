@@ -124,10 +124,7 @@ def hyperparameters_search(
 
     # Set the random state
     set_random_state(experiment_info['random_state'])
-    ray.init(
-        num_cpus=resources['cpu'],
-        num_gpus=resources['gpu'])
-
+    
     # Get the search space, initial params and experiment name from the config file
     search_space = {
         key: getattr(tune, value['tune_function'])(*value['tune_parameters'])
@@ -136,6 +133,9 @@ def hyperparameters_search(
     initial_params = exploration_config["initial_params"]
     # experiment_name = exploration_config["experiment_name"]
     resources = exploration_config["resources"]
+    ray.init(
+        num_cpus=resources['cpu'],
+        num_gpus=resources['gpu'])
 
 
     save_folder = os.path.abspath(f'{experiment_full_path}/files')
