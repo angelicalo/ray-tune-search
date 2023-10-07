@@ -181,7 +181,7 @@ def hyperparameters_search(
         print("TUNE_WORKING_DIR:", os.environ.get("TUNE_WORKING_DIR"))
         print("TUNE_RESULT_DIR:", os.environ.get("TUNE_RESULT_DIR"))
         restore_path = f'../../ray-results/{str(experiment_full_path).split("/")[-1]}'
-        restore_path = Path(restore_path).absolute()
+        restore_path = Path(restore_path)#.absolute()
         print(restore_path)
         tuner = tune.Tuner.restore(path=restore_path, trainable=trainable)
     print('Starting the hyperparameters search...')
