@@ -186,7 +186,7 @@ def hyperparameters_search(
         print("TUNE_RESULT_DIR:", os.environ.get("TUNE_RESULT_DIR"))
         # Resume experiment with: Tuner.restore(path="/umap_kuhar_p10_2", trainable=...)
         restore_path = f'/home/darlinne.soto/ray_results/{str(experiment_full_path).split("/")[-1]}'
-        restore_path = Path(restore_path)#.absolute()
+        restore_path = Path(restore_path).as_posix()
         print(restore_path)
         fixed_func = functools.partial(tune.Tuner.restore, path=restore_path, trainable=trainable)
         tuner = fixed_func()
