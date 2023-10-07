@@ -124,6 +124,9 @@ def hyperparameters_search(
 
     # Set the random state
     set_random_state(experiment_info['random_state'])
+    ray.init(
+        num_cpus=resources['cpu'],
+        num_gpus=resources['gpu'])
 
     # Get the search space, initial params and experiment name from the config file
     search_space = {
