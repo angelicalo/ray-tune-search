@@ -18,6 +18,7 @@ import numpy as np
 import pandas as pd
 import ray
 from pathlib import Path
+import functools
 
 
 class BestResultCallback(Callback):
@@ -133,9 +134,9 @@ def hyperparameters_search(
     initial_params = exploration_config["initial_params"]
     # experiment_name = exploration_config["experiment_name"]
     resources = exploration_config["resources"]
-    ray.init(
-        num_cpus=resources['cpu'],
-        num_gpus=resources['gpu'])
+    # ray.init(
+    #     num_cpus=resources['cpu'],
+    #     num_gpus=resources['gpu'])
 
 
     save_folder = os.path.abspath(f'{experiment_full_path}/files')
@@ -187,7 +188,8 @@ def hyperparameters_search(
         restore_path = f'/home/darlinne.soto/ray_results/{str(experiment_full_path).split("/")[-1]}'
         restore_path = Path(restore_path)#.absolute()
         print(restore_path)
-        tuner = tune.Tuner.restore(path=restore_path, overwrite_trainable=trainable)
+        fixed_func = functools.partial(tune.Tuner.restore, path=restore_path, trainable=trainable)
+        tuner = fixed_func()
     print('Starting the hyperparameters search...')
     results = tuner.fit()
     print('Finished the hyperparameters search...')
