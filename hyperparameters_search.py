@@ -137,6 +137,8 @@ def hyperparameters_search(
     # ray.init(
     #     num_cpus=resources['cpu'],
     #     num_gpus=resources['gpu'])
+    ray.init(runtime_env={"env_vars": {"PL_DISABLE_FORK": "1"}})
+
 
 
     save_folder = os.path.abspath(f'{experiment_full_path}/files')
