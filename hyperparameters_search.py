@@ -137,7 +137,7 @@ def hyperparameters_search(
     # ray.init(
     #     num_cpus=resources['cpu'],
     #     num_gpus=resources['gpu'])
-    ray.init(runtime_env={"env_vars": {"PL_DISABLE_FORK": "1"}})
+    # ray.init(runtime_env={"env_vars": {"PL_DISABLE_FORK": "1"}})
 
 
 
