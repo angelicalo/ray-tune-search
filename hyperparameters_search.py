@@ -37,7 +37,7 @@ class BestResultCallback(Callback):
         }
         self.data.append(new_row)
         self.counter += 1
-        if self.counter % 200 == 0:
+        if self.counter % 50 == 0:
             data_df = pd.DataFrame(self.data)
             data_df.to_csv(f"{self.experiment_full_path}/callback_data.csv", index=False)
         # print(f"Got result: {result['score']}")
@@ -48,6 +48,7 @@ class CustomStopper(Stopper):
         metric: str,
         min: int = 1000,
         patience: int = 100,
+        experiment_full_path = ''
     ):
         self._metric = metric
         self._patience = patience
@@ -56,9 +57,13 @@ class CustomStopper(Stopper):
         self.best_found = 0
         self.counter = 0
         self.trial_ids = []
+        self.experiment_full_path = experiment_full_path
         # self.results = []
 
     def __call__(self, trial_id, result):
+        print(f"CUSTOM STOPPER - Trial ids length: {len(self.trial_ids)}")
+        if self.experiment_full_path:
+            print(f"CUSTOM STOPPER - Saving results to {self.experiment_full_path}...")
         if trial_id not in self.trial_ids and result[self._metric] > 0:
             self.trial_ids.append(trial_id)
             self._iterations += 1
@@ -176,7 +181,7 @@ def hyperparameters_search(
         run_config=air.RunConfig(
             name=str(experiment_full_path).split('/')[-1],
             callbacks=[BestResultCallback(experiment_full_path)],
-            stop=CustomStopper(metric="score", min=1000, patience=100)
+            stop=CustomStopper(metric="score", min=1000, patience=100, experiment_full_path=experiment_full_path)
             # stop=ExperimentPlateauStopper(metric="score", std=0.001, top=10, mode="max", patience=0)
         ),
         param_space=search_space
