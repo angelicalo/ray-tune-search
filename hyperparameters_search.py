@@ -62,7 +62,7 @@ class CustomStopper(Stopper):
 
     def __call__(self, trial_id, result):
         print(f"CUSTOM STOPPER - Trial ids length: {len(self.trial_ids)}")
-        if self.experiment_full_path:
+        if self.experiment_full_path != '':
             print(f"CUSTOM STOPPER - Saving results to {self.experiment_full_path}...")
         if trial_id not in self.trial_ids and result[self._metric] > 0:
             self.trial_ids.append(trial_id)
