@@ -57,7 +57,9 @@ class CustomStopper(Stopper):
         self.best_found = 0
         self.counter = 0
         self.trial_ids = []
+        print('CUSTOM STOPPER - init')
         self.experiment_full_path = experiment_full_path
+        print('CUSTOM STOPPER - experiment_full_path', self.experiment_full_path)
         # self.results = []
 
     def __call__(self, trial_id, result):
