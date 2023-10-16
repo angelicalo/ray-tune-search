@@ -86,7 +86,10 @@ def do_reduce(
         if report_reducer_weight and reducer_config.algorithm in reducer_reporting_weight:
             model_all_params = sum(param.numel() for param in reducer.model.parameters())
             model_all_trainable_params = sum(param.numel() for param in reducer.model.parameters() if param.requires_grad)
+            print('Model params:', model_all_params)
+            print('Model trainable params:', model_all_trainable_params)
             setattr(reducer_config, 'num_params', model_all_params)
+            print('Reducer config', reducer_config)
             setattr(reducer_config, 'num_trainable_params', model_all_trainable_params)
         if save_reducer:
             filename = save_dir + experiment_id + '.reducer'
