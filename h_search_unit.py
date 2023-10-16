@@ -36,7 +36,9 @@ def h_search_unit(
         with open(f"{save_folder}/{item}.yaml", "w") as f:
             yaml.dump(experiment_result, f)
     # Return the score
+    print('Computing score')
     score = process_result(experiment_result)[-1]['accuracy']
+    print('Score --- ', score)
     print('WEIGHT --- ', experiment_result['experiment']['reducer']['num_params'])
     print('WEIGHT --- ', experiment_result['experiment']['reducer']['num_trainable_params'])
     model_params = 0
