@@ -39,7 +39,7 @@ def h_search_unit(
     print('Computing score')
     score = process_result(experiment_result)[-1]['accuracy']
     print('Score --- ', score)
-    print('WEIGHT --- ', experiment_result['experiment']['reducer']['num_params'])
+    print('Experiment result', experiment_result)
     print('WEIGHT --- ', experiment_result['experiment']['reducer']['num_trainable_params'])
     model_params = 0
     return {'score': score, 'model_params': model_params}
