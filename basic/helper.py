@@ -89,7 +89,6 @@ def process_result(result):
     )
     return classifier_results
 
-
 def umap_simple_experiment(umap_config, dataset, random_state):
     """
     Create a config to run a simple experiment with UMAP as a reducer and 3 estimators: RF, SVC and KNN.

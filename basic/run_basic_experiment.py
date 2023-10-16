@@ -124,6 +124,7 @@ def run_basic_experiment(
             reducer_config=config_to_execute.reducer,
             reduce_on=config_to_execute.extra.reduce_on,
             save_reducer=config_to_execute.extra.save_reducer,
+            report_reducer_weight=config_to_execute.extra.report_reducer_weight,
             experiment_id=0,
             save_dir="reducers/"
         )

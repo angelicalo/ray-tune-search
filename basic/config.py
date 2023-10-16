@@ -69,6 +69,7 @@ class ExtraConfig:
     reduce_on: str  # valid values: all, sensor, axis
     scale_on: str  # valid values: self, train
     save_reducer: bool
+    report_reducer_weight: bool = False
 
 
 @dataclass

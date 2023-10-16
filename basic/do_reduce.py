@@ -21,6 +21,7 @@ def do_reduce(
     reduce_on: str = "all",
     suffix: str = "reduced",
     save_reducer: bool = False,
+    report_reducer_weight: bool = False,
     save_dir: str = 'reducers/'
 ) -> List[MultiModalDataset]:
     """Utilitary function to perform dimensionality reduce to a list of
@@ -66,6 +67,7 @@ def do_reduce(
 
     sensor_names = ["accel", "gyro"]
     reducer_needing_y = ['convtae1d', 'lstm', 'convaelstm']
+    reducer_reporting_weight = ['convtae1d']
 
     # Get the reducer kwargs
     kwargs = reducer_config.kwargs or {}
@@ -81,6 +83,11 @@ def do_reduce(
             y_to_use = datasets[0][:][1]
         print(datasets[0][:][0].shape, y_to_use)
         reducer.fit(datasets[0][:][0], y=y_to_use)
+        if report_reducer_weight and reducer_config.algorithm in reducer_reporting_weight:
+            model_all_params = sum(param.numel() for param in reducer.model.parameters())
+            model_all_trainable_params = sum(param.numel() for param in reducer.model.parameters() if param.requires_grad)
+            setattr(reducer_config, 'num_params', model_all_params)
+            setattr(reducer_config, 'num_trainable_params', model_all_trainable_params)
         if save_reducer:
             filename = save_dir + experiment_id + '.reducer'
             with open(filename, 'wb') as handle:
