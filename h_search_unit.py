@@ -20,12 +20,10 @@ def h_search_unit(
     # Create the experiment config
     # experiment_config = umap_simple_experiment(config, dataset, random_state)
     # Run the experiment
-    print('Before run_basic_experiment')
     experiment_result = run_basic_experiment(
         dataset_locations=dataset_locations,
         config_to_execute=config_to_execute
     )
-    print('After run_basic_experiment')
     # Save the results
     if save_folder:
         # Get the number of files in the folder
@@ -36,10 +34,11 @@ def h_search_unit(
         with open(f"{save_folder}/{item}.yaml", "w") as f:
             yaml.dump(experiment_result, f)
     # Return the score
-    print('Computing score')
     score = process_result(experiment_result)[-1]['accuracy']
-    print('Score --- ', score)
-    print('Experiment result', experiment_result)
-    print('WEIGHT --- ', experiment_result['experiment']['reducer']['num_trainable_params'])
-    model_params = 0
-    return {'score': score, 'model_params': model_params}
+    num_params = -1
+    num_trainable_params = -1
+    if 'num_params' in experiment_result['additional']:
+        num_params = experiment_result['additional']['num_params']
+    if 'num_trainable_params' in experiment_result['additional']:
+        num_trainable_params = experiment_result['additional']['num_trainable_params']
+    return {'score': score, 'num_params': num_params, 'num_trainable_params': num_trainable_params}

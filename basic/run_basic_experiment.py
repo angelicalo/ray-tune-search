@@ -178,7 +178,9 @@ def run_basic_experiment(
     additional_info["start_time"] = start_time
     additional_info["end_time"] = end_time
     additional_info["system"] = get_sys_info()
-
+    if config_to_execute.extra.report_reducer_weight:
+        additional_info["num_params"] = config_to_execute.reducer.num_params
+        additional_info["num_trainable_params"] = config_to_execute.reducer.num_trainable_params
     # ----------- 6. Save results ------------
     values = {
         "experiment": asdict(config_to_execute),

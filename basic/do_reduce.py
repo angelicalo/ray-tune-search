@@ -81,16 +81,16 @@ def do_reduce(
         # WHEN USING AN AUTOENCODER
         if reducer_config.algorithm in reducer_needing_y:
             y_to_use = datasets[0][:][1]
-        print(datasets[0][:][0].shape, y_to_use)
+        # print(datasets[0][:][0].shape, y_to_use)
         reducer.fit(datasets[0][:][0], y=y_to_use)
         if report_reducer_weight and reducer_config.algorithm in reducer_reporting_weight:
             model_all_params = sum(param.numel() for param in reducer.model.parameters())
             model_all_trainable_params = sum(param.numel() for param in reducer.model.parameters() if param.requires_grad)
-            print('Model params:', model_all_params)
-            print('Model trainable params:', model_all_trainable_params)
+            # print('Model params:', model_all_params)
+            # print('Model trainable params:', model_all_trainable_params)
             setattr(reducer_config, 'num_params', model_all_params)
-            print('Reducer config', reducer_config)
-            print('Reducer config num_params', reducer_config.num_params)
+            # print('Reducer config', reducer_config)
+            # print('Reducer config num_params', reducer_config.num_params)
             setattr(reducer_config, 'num_trainable_params', model_all_trainable_params)
         if save_reducer:
             filename = save_dir + experiment_id + '.reducer'
