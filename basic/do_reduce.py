@@ -90,6 +90,7 @@ def do_reduce(
             print('Model trainable params:', model_all_trainable_params)
             setattr(reducer_config, 'num_params', model_all_params)
             print('Reducer config', reducer_config)
+            print('Reducer config num_params', reducer_config.num_params)
             setattr(reducer_config, 'num_trainable_params', model_all_trainable_params)
         if save_reducer:
             filename = save_dir + experiment_id + '.reducer'
