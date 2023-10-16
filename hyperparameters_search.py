@@ -111,7 +111,7 @@ def my_objective_function(
             config_to_execute=config_to_execute
         )
     except Exception as e:
-        print(e)
+        print('EXCEPTION FOUND\n', e)
         # result = {'score': random.uniform(-20, -10)}
         result = {'score': -0.1, 'num_params': -1}
     session.report(result)
