@@ -20,6 +20,8 @@ import ray
 from pathlib import Path
 import functools
 import sys
+import traceback
+
 
 class BestResultCallback(Callback):
 
@@ -42,7 +44,15 @@ class BestResultCallback(Callback):
             data_df = pd.DataFrame(self.data)
             data_df.to_csv(f"{self.experiment_full_path}/callback_data.csv", index=False)
         if 'error' in result:
-            self.errors.append({'trial_id': trial.trial_id, 'config': result['config'], 'error': result['error'], 'exc_info_1': result['exc_info_1'], 'exc_info_2': result['exc_info_2'], 'exc_info_3': result['exc_info_3']})
+            self.errors.append(
+                {
+                    'trial_id': trial.trial_id,
+                    'config': result['config'],
+                    'error_type': result['error_type'],
+                    'error_message': result['error_message'],
+                    'error_traceback': result['error_traceback']
+                }
+            )
             errors_df = pd.DataFrame(self.errors)
             errors_df.to_csv(f"{self.experiment_full_path}/callback_errors.csv", index=False)
 
@@ -118,7 +128,7 @@ def my_objective_function(
         print('EXCEPTION FOUND\n', e)
         syserror = sys.exc_info()
         # result = {'score': random.uniform(-20, -10)}
-        result = {'score': -0.1, 'num_params': -1, 'num_trainable_params': -1, 'error': str(e), 'exc_info_1': str(syserror[0]), 'exc_info_2': str(syserror[1]), 'exc_info_3': e.__traceback__}
+        result = {'score': -0.1, 'num_params': -1, 'num_trainable_params': -1, 'error_type': str(syserror[0]), 'error_message': str(syserror[1]), 'error_traceback': traceback.format_exc()}
     session.report(result)
 
 
