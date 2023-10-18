@@ -41,6 +41,7 @@ def process_result(result):
     In this code, at the end of the function, we also report the maximum accuracy found among all the estimators. 
 
     """
+    print(result)
     classifier_results = []
     for report in result['report']:
         classifier_result = {}
