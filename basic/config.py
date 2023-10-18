@@ -1,9 +1,10 @@
 # Python imports
 from dataclasses import dataclass
-from typing import List, Optional
+from typing import List, Optional, Union
 
 # Librep imports
 from librep.base.transform import Transform
+from librep.base.estimator import Estimator
 from librep.estimators import SVC, KNeighborsClassifier, RandomForestClassifier
 from librep.transforms.fft import FFT
 from librep.transforms.reshaper import SimpleReshaper
@@ -17,6 +18,7 @@ from librep.transforms.dimal import DIMALDimensionalityReduction
 from librep.transforms.topo_ae import ConvTAETransform
 from librep.transforms.lstm import LSTMTrainer
 from librep.transforms.convaelstm import ConvAELSTMTransform
+
 ################################################################################
 # Configuration classes
 ################################################################################
