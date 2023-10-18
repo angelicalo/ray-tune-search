@@ -4,7 +4,7 @@ from librep.datasets.multimodal import MultiModalDataset
 from basic.config import EstimatorConfig, estimator_cls
 from librep.utils.workflow import MultiRunWorkflow, SimpleTrainEvalWorkflowMultiModal
 from librep.base.evaluators import SupervisedEvaluator
-from utils import catchtime
+from basic.utils import catchtime
 
 def do_classification(
     datasets: Dict[str, MultiModalDataset],
