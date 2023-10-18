@@ -22,6 +22,7 @@ from basic.do_transform import do_transform
 from basic.do_reduce import do_reduce
 from basic.do_scaling import do_scaling
 from basic.do_classification import do_classification
+from pathlib import Path
 
 # Function that runs the experiment
 def run_basic_experiment(
