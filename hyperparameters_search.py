@@ -43,7 +43,7 @@ class BestResultCallback(Callback):
         if self.counter % 50 == 0:
             data_df = pd.DataFrame(self.data)
             data_df.to_csv(f"{self.experiment_full_path}/callback_data.csv", index=False)
-        if 'error' in result:
+        if 'error_message' in result:
             self.errors.append(
                 {
                     'trial_id': trial.trial_id,
