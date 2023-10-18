@@ -9,7 +9,7 @@ sys.path.append(str(Path(__file__).resolve().parent.parent))
 # Third-party imports
 from basic.config import *
 from basic.run_basic_experiment import run_basic_experiment
-from basic.helper import umap_simple_experiment, process_result, set_random_state
+from basic.helper import process_result
 
 
 def h_search_unit(

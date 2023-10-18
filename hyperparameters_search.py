@@ -19,7 +19,7 @@ import pandas as pd
 import ray
 from pathlib import Path
 import functools
-
+import sys
 
 class BestResultCallback(Callback):
 
@@ -42,7 +42,7 @@ class BestResultCallback(Callback):
             data_df = pd.DataFrame(self.data)
             data_df.to_csv(f"{self.experiment_full_path}/callback_data.csv", index=False)
         if 'error' in result:
-            self.errors.append({'trial_id': trial.trial_id, 'config': result['config'], 'error': result['error']})
+            self.errors.append({'trial_id': trial.trial_id, 'config': result['config'], 'error': result['error'], 'exc_info': result['exc_info']})
             errors_df = pd.DataFrame(self.errors)
             errors_df.to_csv(f"{self.experiment_full_path}/callback_errors.csv", index=False)
 
@@ -117,7 +117,7 @@ def my_objective_function(
     except Exception as e:
         print('EXCEPTION FOUND\n', e)
         # result = {'score': random.uniform(-20, -10)}
-        result = {'score': -0.1, 'num_params': -1, 'num_trainable_params': -1, 'error': str(e)}
+        result = {'score': -0.1, 'num_params': -1, 'num_trainable_params': -1, 'error': str(e), 'exc_info': sys.exc_info()}
     session.report(result)
 
 
