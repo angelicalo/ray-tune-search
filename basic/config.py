@@ -38,6 +38,7 @@ class ReducerConfig:
     name: str
     algorithm: str
     kwargs: Optional[dict]
+    use_y: Optional[bool] = False
 
 
 @dataclass
@@ -68,7 +69,7 @@ class ExtraConfig:
     in_use_features: list
     reduce_on: str  # valid values: all, sensor, axis
     scale_on: str  # valid values: self, train
-    save_reducer: bool
+    save_reducer: bool = False
     report_reducer_weight: bool = False
 
 
@@ -90,6 +91,9 @@ class ExecutionConfig:
     estimators: List[EstimatorConfig]
     # Extra
     extra: ExtraConfig
+    # Optional ones
+    reducer_validation_dataset: Optional[List[str]] = None
+    validation_dataset: Optional[List[str]] = None
 
 
 ################################################################################
@@ -105,6 +109,36 @@ class Identity(Transform):
         return X
 
 
+class WrapperEstimatorTransform(Estimator, Transform):
+    def __init__(self, obj: Union[Estimator, Transform], *args, **kwargs) -> None:
+        self._obj = obj
+
+    def predict(self, X):
+        return self._obj.predict(X)
+
+    def transform(self, X):
+        return self._obj.transform(X)
+
+
+class DebugTransformEstimator(Transform, Estimator):
+    def __init__(self, *args, **kwargs) -> None:
+        print(f"DebugTransformEstimator: args={args}, kwargs={kwargs}")
+
+    def fit(self, X, y=None, X_val=None, y_val=None, **fit_params):
+        print(
+            f"DebugTransformEstimator (fit). X: {len(X)}, y: {len(y) if y is not None else None}, X_val: {len(X_val) if X_val is not None else None}, y_val: {len(y_val) if y_val is not None else None}, fit_params: {fit_params}"
+        )
+        return self
+
+    def transform(self, X):
+        print(f"DebugTransformEstimator (transform): {X.shape}")
+        return X
+    
+    def predict(self, X):
+        print(f"DebugTransformEstimator (predict): {X.shape}")
+        return np.zeros(len(X))
+
+
 ################################################################################
 # Constants (Valid keys)
 ################################################################################
@@ -118,6 +152,8 @@ estimator_cls = {
     "SVM": SVC,
     "KNN": KNeighborsClassifier,
     "RandomForest": RandomForestClassifier,
+    "DebugEstimator": DebugTransformEstimator,
+    "WrapperEstimator": WrapperEstimatorTransform,
 }
 
 # Dictionary with the valid reducer keys to use in experiment configuration
@@ -126,8 +162,10 @@ estimator_cls = {
 # Reducers must be a subclass of `librep.reducers.base.Transform` or implement
 # the same interface (scikit-learn compatible, fit/transform methods)
 reducers_cls = {
-    "identity": Identity, 
-    "umap": UMAP, 
+    "identity": Identity,
+    "umap": UMAP,
+    "WrapperTransform": WrapperEstimatorTransform,
+    "DebugReducer": DebugTransformEstimator,
     "dimal": DIMALDimensionalityReduction,
     "convtae1d": ConvTAETransform,
     "lstm": LSTMTrainer,
@@ -141,6 +179,8 @@ reducers_cls = {
 transforms_cls = {
     "identity": Identity,
     "fft": FFT,
+    "WrapperTransform": WrapperEstimatorTransform,
+    "DebugTransform": DebugTransformEstimator,
     "spectrogram": Spectrogram,
     "stats": StatsTransform,
     "reshaper": SimpleReshaper

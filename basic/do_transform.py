@@ -20,7 +20,7 @@ def do_transform(
     datasets: List[MultiModalDataset],
     transform_configs: List[TransformConfig],
     keep_suffixes: bool = True,
-) -> List[MultiModalDataset]:
+) -> Dict[str, MultiModalDataset]:
     """Utilitary function to apply a list of transforms to a list of datasets
 
     Parameters
@@ -39,9 +39,9 @@ def do_transform(
     List[MultiModalDataset]
         The transformed datasets.
     """
-    new_datasets = []
+    new_datasets = dict()
     # Loop over the datasets
-    for dset in datasets:
+    for dset_name, dset in datasets.items():
         transforms = []
         new_names = []
 
@@ -83,7 +83,7 @@ def do_transform(
         # Apply the transforms to the dataset
         dset = transformer(dset)
         # Append the transformed dataset to the list of new datasets
-        new_datasets.append(dset)
+        new_datasets[dset_name] = dset
 
     # Return the list of transformed datasets
     return new_datasets
