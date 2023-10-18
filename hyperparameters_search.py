@@ -118,7 +118,7 @@ def my_objective_function(
         print('EXCEPTION FOUND\n', e)
         syserror = sys.exc_info()
         # result = {'score': random.uniform(-20, -10)}
-        result = {'score': -0.1, 'num_params': -1, 'num_trainable_params': -1, 'error': str(e), 'exc_info_1': syserror[0], 'exc_info_2': syserror[1], 'exc_info_3': syserror[2]}
+        result = {'score': -0.1, 'num_params': -1, 'num_trainable_params': -1, 'error': str(e), 'exc_info_1': str(syserror[0]), 'exc_info_2': str(syserror[1]), 'exc_info_3': str(syserror[2])}
     session.report(result)
 
 
