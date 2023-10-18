@@ -26,6 +26,7 @@ class BestResultCallback(Callback):
     def __init__(self, experiment_full_path):
         self.experiment_full_path = experiment_full_path
         self.data = []
+        self.errors = []
         self.counter = 0
 
     def on_trial_result(self, iteration, trials, trial, result, **info):
@@ -40,7 +41,10 @@ class BestResultCallback(Callback):
         if self.counter % 50 == 0:
             data_df = pd.DataFrame(self.data)
             data_df.to_csv(f"{self.experiment_full_path}/callback_data.csv", index=False)
-        # print(f"Got result: {result['score']}")
+        if 'error' in result:
+            self.errors.append({'trial_id': trial.trial_id, 'config': result['config'], 'error': result['error']})
+            errors_df = pd.DataFrame(self.errors)
+            errors_df.to_csv(f"{self.experiment_full_path}/callback_errors.csv", index=False)
 
 class CustomStopper(Stopper):
     def __init__(
@@ -113,7 +117,7 @@ def my_objective_function(
     except Exception as e:
         print('EXCEPTION FOUND\n', e)
         # result = {'score': random.uniform(-20, -10)}
-        result = {'score': -0.1, 'num_params': -1, 'num_trainable_params': -1}
+        result = {'score': -0.1, 'num_params': -1, 'num_trainable_params': -1, 'error': str(e)}
     session.report(result)
 
 
