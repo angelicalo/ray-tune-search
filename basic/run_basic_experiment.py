@@ -67,7 +67,6 @@ def run_basic_experiment(
     ValueError
         If the reducer is specified but the reducer_dataset is not specified.
     """
-    experiment_output_file = Path(experiment_output_file)
 
     if config_version != config_to_execute.version:
         raise ValueError(
