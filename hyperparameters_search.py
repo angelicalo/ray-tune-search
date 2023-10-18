@@ -129,7 +129,7 @@ def my_objective_function(
         syserror = sys.exc_info()
         # result = {'score': random.uniform(-20, -10)}
         result = {'score': -0.1, 'num_params': -1, 'num_trainable_params': -1, 'error_type': str(syserror[0]), 'error_message': str(syserror[1]), 'error_traceback': '\n'.join(traceback.format_tb(e.__traceback__))}
-        print('EXCEPTION'*10, result)
+        # print(result)
     session.report(result)
 
 
