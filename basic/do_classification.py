@@ -1,7 +1,7 @@
 from dataclasses import asdict
 from typing import Dict
 from librep.datasets.multimodal import MultiModalDataset
-from config import EstimatorConfig, estimator_cls
+from basic.config import EstimatorConfig, estimator_cls
 from librep.utils.workflow import MultiRunWorkflow, SimpleTrainEvalWorkflowMultiModal
 from librep.base.evaluators import SupervisedEvaluator
 from utils import catchtime
