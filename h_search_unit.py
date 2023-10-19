@@ -34,11 +34,23 @@ def h_search_unit(
         with open(f"{save_folder}/{item}.yaml", "w") as f:
             yaml.dump(experiment_result, f)
     # Return the score
-    score = process_result(experiment_result)[-1]['accuracy']
-    num_params = -1
-    num_trainable_params = -1
+    processed_result = process_result(experiment_result)
+    # Get the maximum accuracy between all the estimators
+    max_accuracy = processed_result[-1]['accuracy']
+    result_object = {'score': max_accuracy}
+    criteria = ['accuracy (mean)', 'accuracy (std)', 'f1-score macro (mean)', 'f1-score macro (std)', 'f1-score weighted (mean)', 'f1-score weighted (std)']
+    for result in processed_result[:-1]:
+        for criterion in criteria:
+            if criterion in result:
+                result_object[f'{result["estimator"]}-{criterion}'] = result[criterion]
+
+    # score = process_result(experiment_result)[-1]['accuracy']
+    
     if 'num_params' in experiment_result['additional']:
-        num_params = experiment_result['additional']['num_params']
+        result_object['num_params'] = experiment_result['additional']['num_params']
+        # num_params = experiment_result['additional']['num_params']
     if 'num_trainable_params' in experiment_result['additional']:
-        num_trainable_params = experiment_result['additional']['num_trainable_params']
-    return {'score': score, 'num_params': num_params, 'num_trainable_params': num_trainable_params}
+        result_object['num_trainable_params'] = experiment_result['additional']['num_trainable_params']
+        # num_trainable_params = experiment_result['additional']['num_trainable_params']
+    # return {'score': max_accuracy, 'num_params': num_params, 'num_trainable_params': num_trainable_params}
+    return result_object
