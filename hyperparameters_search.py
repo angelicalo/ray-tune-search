@@ -155,19 +155,18 @@ def hyperparameters_search(
         for key, value in exploration_config["search_space"].items()
     }
     initial_params = exploration_config["initial_params"]
-    # experiment_name = exploration_config["experiment_name"]
+    
     resources = exploration_config["resources"]
-    # ray.init(
-    #     num_cpus=resources['cpu'],
-    #     num_gpus=resources['gpu'])
-    # ray.init(runtime_env={"env_vars": {"PL_DISABLE_FORK": "1"}})
-
-
-
+    
+    # Create the experiments folder
     save_folder = os.path.abspath(f'{experiment_full_path}/files')
-    # save_folder = os.path.abspath(f'experiments/{experiment}/files')
     print(f"Saving results to {save_folder}...")
     os.makedirs(save_folder, exist_ok=True)
+    
+    # Create the callback errors file
+    callback_errors_csv = os.path.abspath(f'{experiment_full_path}/callback_errors.csv')
+    print(f"Saving errors in file {callback_errors_csv}...")
+    pd.DataFrame().to_csv(callback_errors_csv, index=False)
 
     hyperopt = HyperOptSearch(points_to_evaluate=initial_params)
     hyperopt = ConcurrencyLimiter(hyperopt, max_concurrent=experiment_info['max_concurrent'])
@@ -177,8 +176,6 @@ def hyperparameters_search(
     # Setting the parameters for the function
     trainable = tune.with_parameters(
         trainable,
-        # random_state=random_state,
-        # dataset=dataset,
         save_folder=save_folder,
         dataset_locations=dataset_locations,
         basic_experiment_configuration=base_config,
