@@ -47,38 +47,44 @@ def process_result(result):
         classifier_result = {}
         classifier_result['estimator'] = report['estimator']['name']
         classifier_result["accuracy (mean)"] = np.mean(
-            [x["accuracy"] for r in report["results"]["runs"] for x in r["result"]]
+            # [x["accuracy"] for r in report["results"]["runs"] for x in r["result"]]
+            [r['result']["accuracy"] for r in report["results"]["runs"]]
         )
         classifier_result["accuracy (std)"] = np.std(
-            [x["accuracy"] for r in report["results"]["runs"] for x in r["result"]]
+            # [x["accuracy"] for r in report["results"]["runs"] for x in r["result"]]
+            [r['result']["accuracy"] for r in report["results"]["runs"]]
         )
         classifier_result["f1-score macro (mean)"] = np.mean(
-            [
-                x["f1 score (macro)"]
-                for r in report["results"]["runs"]
-                for x in r["result"]
-            ]
+            [r['result']["f1 score (macro)"] for r in report["results"]["runs"]]
+            # [
+            #     x["f1 score (macro)"]
+            #     for r in report["results"]["runs"]
+            #     for x in r["result"]
+            # ]
         )
         classifier_result["f1-score macro (std)"] = np.std(
-            [
-                x["f1 score (macro)"]
-                for r in report["results"]["runs"]
-                for x in r["result"]
-            ]
+            [r['result']["f1 score (macro)"] for r in report["results"]["runs"]]
+            # [
+            #     x["f1 score (macro)"]
+            #     for r in report["results"]["runs"]
+            #     for x in r["result"]
+            # ]
         )
         classifier_result["f1-score weighted (mean)"] = np.mean(
-            [
-                x["f1 score (weighted)"]
-                for r in report["results"]["runs"]
-                for x in r["result"]
-            ]
+            [r['result']["f1 score (weighted)"] for r in report["results"]["runs"]]
+            # [
+            #     x["f1 score (weighted)"]
+            #     for r in report["results"]["runs"]
+            #     for x in r["result"]
+            # ]
         )
         classifier_result["f1-score weighted (std)"] = np.std(
-            [
-                x["f1 score (weighted)"]
-                for r in report["results"]["runs"]
-                for x in r["result"]
-            ]
+            [r['result']["f1 score (weighted)"] for r in report["results"]["runs"]]
+            # [
+            #     x["f1 score (weighted)"]
+            #     for r in report["results"]["runs"]
+            #     for x in r["result"]
+            # ]
         )
         classifier_results.append(classifier_result)
     
