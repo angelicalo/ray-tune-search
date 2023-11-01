@@ -120,12 +120,15 @@ def do_reduce(
         # Fit the reducer the datasets specified in fit_dsets
         reducer.fit(**fit_dsets)
 
-        if report_reducer_weight and reducer_config.algorithm in model_with_weights:
+        try:
             model_all_params = sum(param.numel() for param in reducer.model.parameters())
-            model_all_trainable_params = sum(param.numel() for param in reducer.model.parameters() if param.requires_grad)
-            setattr(reducer_config, 'num_params', model_all_params)
-            setattr(reducer_config, 'num_trainable_params', model_all_trainable_params)
-
+            model_all_trainable_params = sum(param.numel() for param in reducer.model.parameters() if param.requires_grad)    
+        except:
+            model_all_params = -1
+            model_all_trainable_params = -1
+        setattr(reducer_config, 'num_params', model_all_params)
+        setattr(reducer_config, 'num_trainable_params', model_all_trainable_params)
+            
         # Instantiate the WindowedTransform with fit_on=None and
         # transform_on="all", i.e. the transform will be applied to
         # whole dataset.
