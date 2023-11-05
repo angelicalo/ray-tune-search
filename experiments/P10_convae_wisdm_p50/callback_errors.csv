@@ -131,3 +131,36 @@ df5eb290,"{'batch_size': 128, 'num_CL': 2, 'size_CL': 29, 'kernel': 2, 'num_HL':
   File ""/home/darlinne.soto/.local/lib/python3.10/site-packages/torch/optim/adam.py"", line 507, in _multi_tensor_adam
     denom = torch._foreach_add(exp_avg_sq_sqrt, eps)
 "
+21b33ecb,"{'batch_size': 64, 'num_CL': 2, 'size_CL': 32, 'kernel': 4, 'num_HL': 4, 'latent_dim': 93, 'opt_lr': 5.827899631957025e-05, 'opt_wd': 1.941050409187588e-06}",<class 'torch.cuda.OutOfMemoryError'>,CUDA out of memory. Tried to allocate 370.00 MiB (GPU 0; 23.65 GiB total capacity; 6.05 GiB already allocated; 1.94 MiB free; 6.56 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF,"  File ""/home/darlinne.soto/new_framework/ray-tune-search/hyperparameters_search.py"", line 119, in my_objective_function
+    result = h_search_unit(
+
+  File ""/home/darlinne.soto/new_framework/ray-tune-search/h_search_unit.py"", line 23, in h_search_unit
+    experiment_result = run_basic_experiment(
+
+  File ""/home/darlinne.soto/new_framework/ray-tune-search/basic/run_basic_experiment.py"", line 151, in run_basic_experiment
+    datasets = do_reduce(
+
+  File ""/home/darlinne.soto/new_framework/ray-tune-search/basic/do_reduce.py"", line 121, in do_reduce
+    reducer.fit(**fit_dsets)
+
+  File ""/home/darlinne.soto/.local/lib/python3.10/site-packages/librep/transforms/topo_ae.py"", line 165, in fit
+    epoch_loss, epoch_ae_loss, epoch_topo_loss = self.__one_epoch(train_data_loader, train_mode=True)
+
+  File ""/home/darlinne.soto/.local/lib/python3.10/site-packages/librep/transforms/topo_ae.py"", line 77, in __one_epoch
+    self.optimizer.step()
+
+  File ""/home/darlinne.soto/.local/lib/python3.10/site-packages/torch/optim/optimizer.py"", line 280, in wrapper
+    out = func(*args, **kwargs)
+
+  File ""/home/darlinne.soto/.local/lib/python3.10/site-packages/torch/optim/optimizer.py"", line 33, in _use_grad
+    ret = func(self, *args, **kwargs)
+
+  File ""/home/darlinne.soto/.local/lib/python3.10/site-packages/torch/optim/adam.py"", line 141, in step
+    adam(
+
+  File ""/home/darlinne.soto/.local/lib/python3.10/site-packages/torch/optim/adam.py"", line 281, in adam
+    func(params,
+
+  File ""/home/darlinne.soto/.local/lib/python3.10/site-packages/torch/optim/adam.py"", line 505, in _multi_tensor_adam
+    exp_avg_sq_sqrt = torch._foreach_sqrt(device_exp_avg_sqs)
+"
