@@ -77,7 +77,7 @@ class CustomStopper(Stopper):
         # self.results = []
 
     def __call__(self, trial_id, result):
-        print(f"CUSTOM STOPPER - Trial ids length: {len(self.trial_ids)} patience: {self._patience}")
+        print(f"CUSTOM STOPPER - Trial ids length: {len(self.trial_ids)} counter: {self.counter}")
         # if self.experiment_full_path != '':
             # print(f"CUSTOM STOPPER - Saving results to {self.experiment_full_path}...")
         if trial_id not in self.trial_ids and result[self._metric] > 0:
@@ -159,9 +159,11 @@ def hyperparameters_search(
     resources = exploration_config["resources"]
     
     # Create the experiments folder
-    save_folder = os.path.abspath(f'{experiment_full_path}/files')
-    print(f"Saving results to {save_folder}...")
-    os.makedirs(save_folder, exist_ok=True)
+    save_folder = None
+    if experiment_info['save_experiment']:
+        save_folder = os.path.abspath(f'{experiment_full_path}/files')
+        print(f"Saving results to {save_folder}...")
+        os.makedirs(save_folder, exist_ok=True)
     
     # Create the callback errors file
     callback_errors_csv = os.path.abspath(f'{experiment_full_path}/callback_errors.csv')

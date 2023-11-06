@@ -50,6 +50,7 @@ def main(args):
         'random_state': args.random_state,
         'time_budget': time_budget,
         'restore': args.restore,
+        'save_experiment': args.save_experiment
         # 'type_stopper': 
         # 'stopper_custom': args.stopper_custom
     }
@@ -144,6 +145,11 @@ if __name__=="__main__":
     parser.add_argument(
         "--restore",
         help="Restore the experiment",
+        action="store_true",
+    )
+    parser.add_argument(
+        "--save_experiment",
+        help="Save experiment files",
         action="store_true",
     )
     # parser.add_argument(
