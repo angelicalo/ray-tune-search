@@ -1,1 +1,76 @@
+trial_id,config,error_type,error_message,error_traceback
+7b32f5aa,"{'batch_size': 128, 'num_CL': 2, 'size_CL': 32, 'kernel': 3, 'num_HL': 4, 'latent_dim': 118, 'opt_lr': 0.00021379219725972318, 'opt_wd': 4.157406666563258e-06}",<class 'torch.cuda.OutOfMemoryError'>,CUDA out of memory. Tried to allocate 374.00 MiB (GPU 0; 23.65 GiB total capacity; 7.36 GiB already allocated; 237.94 MiB free; 8.46 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF,"  File ""/home/darlinne.soto/new_framework/ray-tune-search/hyperparameters_search.py"", line 119, in my_objective_function
+    result = h_search_unit(
 
+  File ""/home/darlinne.soto/new_framework/ray-tune-search/h_search_unit.py"", line 23, in h_search_unit
+    experiment_result = run_basic_experiment(
+
+  File ""/home/darlinne.soto/new_framework/ray-tune-search/basic/run_basic_experiment.py"", line 151, in run_basic_experiment
+    datasets = do_reduce(
+
+  File ""/home/darlinne.soto/new_framework/ray-tune-search/basic/do_reduce.py"", line 121, in do_reduce
+    reducer.fit(**fit_dsets)
+
+  File ""/home/darlinne.soto/.local/lib/python3.10/site-packages/librep/transforms/topo_ae.py"", line 165, in fit
+    epoch_loss, epoch_ae_loss, epoch_topo_loss = self.__one_epoch(train_data_loader, train_mode=True)
+
+  File ""/home/darlinne.soto/.local/lib/python3.10/site-packages/librep/transforms/topo_ae.py"", line 77, in __one_epoch
+    self.optimizer.step()
+
+  File ""/home/darlinne.soto/.local/lib/python3.10/site-packages/torch/optim/optimizer.py"", line 280, in wrapper
+    out = func(*args, **kwargs)
+
+  File ""/home/darlinne.soto/.local/lib/python3.10/site-packages/torch/optim/optimizer.py"", line 33, in _use_grad
+    ret = func(self, *args, **kwargs)
+
+  File ""/home/darlinne.soto/.local/lib/python3.10/site-packages/torch/optim/adam.py"", line 141, in step
+    adam(
+
+  File ""/home/darlinne.soto/.local/lib/python3.10/site-packages/torch/optim/adam.py"", line 281, in adam
+    func(params,
+
+  File ""/home/darlinne.soto/.local/lib/python3.10/site-packages/torch/optim/adam.py"", line 507, in _multi_tensor_adam
+    denom = torch._foreach_add(exp_avg_sq_sqrt, eps)
+"
+ab6f9bf0,"{'batch_size': 128, 'num_CL': 4, 'size_CL': 30, 'kernel': 3, 'num_HL': 3, 'latent_dim': 132, 'opt_lr': 6.996082862633396e-05, 'opt_wd': 3.5708000789770456e-06}",<class 'torch.cuda.OutOfMemoryError'>,CUDA out of memory. Tried to allocate 440.00 MiB (GPU 0; 23.65 GiB total capacity; 5.52 GiB already allocated; 415.94 MiB free; 6.37 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF,"  File ""/home/darlinne.soto/new_framework/ray-tune-search/hyperparameters_search.py"", line 119, in my_objective_function
+    result = h_search_unit(
+
+  File ""/home/darlinne.soto/new_framework/ray-tune-search/h_search_unit.py"", line 23, in h_search_unit
+    experiment_result = run_basic_experiment(
+
+  File ""/home/darlinne.soto/new_framework/ray-tune-search/basic/run_basic_experiment.py"", line 151, in run_basic_experiment
+    datasets = do_reduce(
+
+  File ""/home/darlinne.soto/new_framework/ray-tune-search/basic/do_reduce.py"", line 147, in do_reduce
+    {dset_name: transformer(datasets[dset_name]) for dset_name in apply_only_in}
+
+  File ""/home/darlinne.soto/new_framework/ray-tune-search/basic/do_reduce.py"", line 147, in <dictcomp>
+    {dset_name: transformer(datasets[dset_name]) for dset_name in apply_only_in}
+
+  File ""/home/darlinne.soto/.local/lib/python3.10/site-packages/librep/datasets/multimodal/transformer.py"", line 523, in __call__
+    new_X = window_transform.the_transform.transform(X=X)
+
+  File ""/home/darlinne.soto/.local/lib/python3.10/site-packages/librep/transforms/topo_ae.py"", line 302, in transform
+    return self.model.encode(in_tensor).cpu().detach().numpy()
+
+  File ""/home/darlinne.soto/.local/lib/python3.10/site-packages/librep/estimators/ae/torch/models/topological_ae/topological_ae.py"", line 80, in encode
+    return self.autoencoder.encode(x)
+
+  File ""/home/darlinne.soto/.local/lib/python3.10/site-packages/librep/estimators/ae/torch/models/topological_ae/model_submodules.py"", line 447, in encode
+    return self.encoder(x)
+
+  File ""/home/darlinne.soto/.local/lib/python3.10/site-packages/torch/nn/modules/module.py"", line 1501, in _call_impl
+    return forward_call(*args, **kwargs)
+
+  File ""/home/darlinne.soto/.local/lib/python3.10/site-packages/torch/nn/modules/container.py"", line 217, in forward
+    input = module(input)
+
+  File ""/home/darlinne.soto/.local/lib/python3.10/site-packages/torch/nn/modules/module.py"", line 1501, in _call_impl
+    return forward_call(*args, **kwargs)
+
+  File ""/home/darlinne.soto/.local/lib/python3.10/site-packages/torch/nn/modules/activation.py"", line 103, in forward
+    return F.relu(input, inplace=self.inplace)
+
+  File ""/home/darlinne.soto/.local/lib/python3.10/site-packages/torch/nn/functional.py"", line 1457, in relu
+    result = torch.relu(input)
+"
