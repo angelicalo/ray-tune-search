@@ -13,10 +13,10 @@ import os
 def main(args):
     # Get the dataset locations
     data_fullpath = Path.absolute(Path(args.data))
-    if not os.exists(data_fullpath):
+    if not os.path.exists(data_fullpath):
         raise ValueError(f"Data path {data_fullpath} does not exist")
     dataset_locations_fullpath = Path.absolute(Path(args.dataset_locations_fullpath))
-    if not os.exists(dataset_locations_fullpath):
+    if not os.path.exists(dataset_locations_fullpath):
         raise ValueError(f"Dataset locations path {dataset_locations_fullpath} does not exist")
     dataset_locations = get_dataset_locations(
         data_fullpath=data_fullpath,
